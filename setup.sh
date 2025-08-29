@@ -71,12 +71,29 @@ fi
 # 创建 .claude 目录和 hooks
 mkdir -p "$TARGET_DIR/.claude/hooks"
 
-# 复制 Hook 脚本
-if [ -d "templates/.claude/hooks" ]; then
-    cp -r "templates/.claude/hooks/"* "$TARGET_DIR/.claude/hooks/" 2>/dev/null || true
-    # 确保脚本可执行
-    chmod +x "$TARGET_DIR/.claude/hooks/"*.sh 2>/dev/null || true
-    print_color "$GREEN" "  ✅ .claude/hooks/ (中文化 Hook 脚本)"
+# 复制完整的 .claude 目录内容
+if [ -d "templates/.claude" ]; then
+    # 复制 commands 目录
+    if [ -d "templates/.claude/commands" ]; then
+        mkdir -p "$TARGET_DIR/.claude/commands"
+        cp -r "templates/.claude/commands/"* "$TARGET_DIR/.claude/commands/" 2>/dev/null || true
+        print_color "$GREEN" "  ✅ .claude/commands/ (Claude Code 命令集)"
+    fi
+    
+    # 复制 hooks 目录
+    if [ -d "templates/.claude/hooks" ]; then
+        mkdir -p "$TARGET_DIR/.claude/hooks"
+        cp -r "templates/.claude/hooks/"* "$TARGET_DIR/.claude/hooks/" 2>/dev/null || true
+        # 确保脚本可执行
+        chmod +x "$TARGET_DIR/.claude/hooks/"*.sh 2>/dev/null || true
+        print_color "$GREEN" "  ✅ .claude/hooks/ (中文化 Hook 脚本和配置)"
+    fi
+    
+    # 复制 settings.local.json（如果不存在）
+    if [ -f "templates/.claude/settings.local.json" ] && [ ! -f "$TARGET_DIR/.claude/settings.local.json" ]; then
+        cp "templates/.claude/settings.local.json" "$TARGET_DIR/.claude/" 2>/dev/null || true
+        print_color "$GREEN" "  ✅ .claude/settings.local.json (本地配置)"
+    fi
 fi
 
 # 创建示例目录

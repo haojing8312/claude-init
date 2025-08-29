@@ -1,98 +1,103 @@
 #!/bin/bash
-# 通知 Hook
-# 为重要的 Claude Code 事件发送系统通知
-#
-# 此 hook 监控特定工具调用和事件，
-# 通过系统通知提醒用户重要活动。
-#
-# 支持的通知：
-# - 长时间运行的任务完成
-# - 错误和警告
-# - 重要的文件修改
-# - MCP 服务器连接状态
+# Claude Code notification hook script
+# Plays pleasant sounds when Claude needs input or completes tasks
 
-set -euo pipefail
+# Get the directory where this script is located
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+SOUNDS_DIR="$SCRIPT_DIR/sounds"
 
-# 检查通知系统可用性
-HAS_NOTIFY=false
-if command -v osascript >/dev/null 2>&1; then
-    # macOS 通知支持
-    HAS_NOTIFY=true
-    NOTIFY_CMD="osascript"
-elif command -v notify-send >/dev/null 2>&1; then
-    # Linux 通知支持
-    HAS_NOTIFY=true
-    NOTIFY_CMD="notify-send"
-fi
-
-# 如果没有通知系统，静默退出
-if [[ "$HAS_NOTIFY" != "true" ]]; then
-    echo '{"continue": true}'
-    exit 0
-fi
-
-# 发送通知函数
-send_notification() {
-    local title="$1"
-    local message="$2"
-    local urgency="${3:-normal}"
+# Function to play a sound file with cross-platform support
+play_sound_file() {
+    local sound_file="$1"
     
-    if [[ "$NOTIFY_CMD" == "osascript" ]]; then
-        # macOS 通知
-        osascript -e "display notification \"$message\" with title \"Claude Code\" subtitle \"$title\""
-    elif [[ "$NOTIFY_CMD" == "notify-send" ]]; then
-        # Linux 通知
-        notify-send -u "$urgency" "Claude Code - $title" "$message"
+    # Check if file exists
+    if [[ ! -f "$sound_file" ]]; then
+        echo "Warning: Sound file not found: $sound_file" >&2
+        return 1
     fi
+    
+    # Detect OS and use appropriate command-line audio player
+    local os_type="$(uname -s)"
+    
+    case "$os_type" in
+        Darwin*)  # macOS
+            if command -v afplay &> /dev/null; then
+                afplay "$sound_file" 2>/dev/null &
+                return 0  # Exit immediately after starting playback
+            fi
+            ;;
+            
+        Linux*)   # Linux
+            # Try PulseAudio first (most common on modern desktop Linux)
+            if command -v paplay &> /dev/null; then
+                paplay "$sound_file" 2>/dev/null &
+                return 0  # Exit immediately after starting playback
+            fi
+            
+            # Try ALSA
+            if command -v aplay &> /dev/null; then
+                aplay -q "$sound_file" 2>/dev/null &
+                return 0  # Exit immediately after starting playback
+            fi
+            
+            # Try PipeWire (newer systems)
+            if command -v pw-play &> /dev/null; then
+                pw-play "$sound_file" 2>/dev/null &
+                return 0  # Exit immediately after starting playback
+            fi
+            
+            # Try sox play command
+            if command -v play &> /dev/null; then
+                play -q "$sound_file" 2>/dev/null &
+                return 0  # Exit immediately after starting playback
+            fi
+            ;;
+            
+        MINGW*|CYGWIN*|MSYS*)  # Windows (Git Bash, WSL, etc.)
+            # Try PowerShell
+            if command -v powershell.exe &> /dev/null; then
+                # Use Windows Media Player COM object for better compatibility
+                # Run in background and exit immediately
+                powershell.exe -NoProfile -Command "
+                    Start-Job -ScriptBlock {
+                        \$player = New-Object -ComObject WMPlayer.OCX
+                        \$player.URL = '$sound_file'
+                        \$player.controls.play()
+                        Start-Sleep -Milliseconds 1000
+                        \$player.close()
+                    }
+                " 2>/dev/null
+                return 0  # Exit immediately after starting playback
+            fi
+            ;;
+    esac
+    
+    # If we have ffplay (cross-platform)
+    if command -v ffplay &> /dev/null; then
+        ffplay -nodisp -autoexit -loglevel quiet "$sound_file" 2>/dev/null &
+        return 0  # Exit immediately after starting playback
+    fi
+    
+    # No audio player found - fail silently
+    return 1
 }
 
-# 从 stdin 读取输入
-INPUT_JSON=$(cat)
-
-# 提取相关信息
-tool_name=$(echo "$INPUT_JSON" | jq -r '.tool_name // ""')
-tool_input=$(echo "$INPUT_JSON" | jq -r '.tool_input // {}')
-
-# 根据工具类型发送适当通知
-case "$tool_name" in
-    "Task")
-        # Task 工具调用 - 通知子智能体启动
-        task_desc=$(echo "$tool_input" | jq -r '.description // "未知任务"')
-        send_notification "任务启动" "启动子智能体：$task_desc"
+# Main script logic
+case "$1" in
+    "input")
+        play_sound_file "$SOUNDS_DIR/input-needed.wav"
         ;;
-    
-    "Bash")
-        # 长时间运行的命令通知
-        command=$(echo "$tool_input" | jq -r '.command // ""')
-        timeout=$(echo "$tool_input" | jq -r '.timeout // 120000')
-        run_in_bg=$(echo "$tool_input" | jq -r '.run_in_background // false')
         
-        if [[ "$run_in_bg" == "true" ]] || [[ "$timeout" -gt 300000 ]]; then
-            send_notification "后台任务" "启动长时间运行的命令"
-        fi
+    "complete")
+        play_sound_file "$SOUNDS_DIR/complete.wav"
         ;;
-    
-    mcp__*)
-        # MCP 服务器调用通知
-        server_name=$(echo "$tool_name" | cut -d'_' -f3)
-        send_notification "MCP 调用" "调用 $server_name 服务器"
-        ;;
-    
-    "Write"|"MultiEdit")
-        # 文件修改通知
-        file_path=$(echo "$tool_input" | jq -r '.file_path // ""')
-        if [[ -n "$file_path" ]]; then
-            filename=$(basename "$file_path")
-            send_notification "文件修改" "正在编辑：$filename"
-        fi
+        
+    *)
+        echo "Usage: $0 {input|complete}" >&2
+        echo "  input    - Play sound when Claude needs user input" >&2
+        echo "  complete - Play sound when Claude completes tasks" >&2
+        exit 1
         ;;
 esac
 
-# 检查错误模式
-error_message=$(echo "$INPUT_JSON" | jq -r '.error // ""')
-if [[ -n "$error_message" && "$error_message" != "null" ]]; then
-    send_notification "错误" "$error_message" "critical"
-fi
-
-# 继续正常执行
-echo '{"continue": true}'
+exit 0
