@@ -16,7 +16,7 @@
 
 🚀 **为中国开发者定制的 Claude Code 智能开发环境**
 
-[快速开始](#-快速开始) • [功能特性](#-特性) • [使用指南](#-使用指南) • [项目示例](#-项目模板) • [更新日志](CHANGELOG.md)
+[快速开始](#-快速开始) • [功能特性](#-特性) • [使用指南](#-使用指南) • [使用反馈](#-使用反馈) • [更新日志](CHANGELOG.md)
 
 </div>
 
@@ -68,144 +68,126 @@ cd claude-init
 
 ## 📖 使用指南
 
-### 1. 初始化项目
+### 1. 开始使用
 
-安装完成后，你的项目将自动包含：
-
-```
-your-project/
-├── CLAUDE.md                    # 中文 AI 上下文文件
-├── docs/                        # 中文文档系统
-│   ├── README.md               # 文档系统指南
-│   └── ai-context/             # AI 上下文管理
-│       ├── project-structure.md
-│       └── docs-overview.md
-├── .claude/                     # Claude Code 配置
-│   ├── settings.json           # 主配置文件
-│   └── hooks/                  # 自动化 Hook 脚本
-└── examples/                   # 使用示例
-```
-
-### 2. 核心概念
-
-#### 📋 三层文档架构
-
-**第1层：基础层（很少变更）**
-- `CLAUDE.md` - 项目级 AI 指令和编码标准
-- 全局约定和架构原则
-
-**第2层：组件层（偶尔变更）**  
-- `CONTEXT.md` - 组件级架构模式
-- 模块边界和集成规范
-
-**第3层：功能层（频繁变更）**
-- 功能级实现细节
-- 与代码共同维护的文档
-
-#### 🤖 智能体协作
+安装完成后，在任意项目中启动 Claude Code：
 
 ```bash
-# 启动 Claude Code
 claude
-
-# 系统自动为每个子任务注入适当上下文
-# 无需手动指定项目文档
 ```
 
-### 3. 高级功能
+现在你可以用中文与 AI 对话，所有上下文和提示都已本地化。
 
-#### 🔍 Gemini 深度咨询
+### 2. 🎯 MCP 服务器功能
 
-```python
-# 复杂问题深度分析（自动附加项目文档）
-mcp__gemini__consult_gemini(
-    specific_question="如何优化这个API的性能？",
-    problem_description="当前API响应时间过长...",
-    attached_files=["src/api/routes.py"]
-)
+#### 🧠 Gemini 深度咨询
+**触发方式：** 对 Claude 说"咨询 Gemini" 或 "请 Gemini 分析"
+**适用场景：**
+- 复杂架构设计问题
+- 代码性能优化建议  
+- 多文件代码重构方案
+- 深度技术问题分析
+
+**发送内容：**
+- 描述你的具体问题
+- 附上相关代码文件
+- 说明你想要什么类型的建议
+
+**Gemini 能做什么：**
+- 提供多种解决方案对比
+- 深度代码审查和优化建议
+- 架构设计最佳实践
+- 跨技术栈的经验分享
+
+#### 📚 Context7 文档查询  
+**触发方式：** 询问任何开源库的最新用法
+**适用场景：**
+- 学习新框架或库
+- 查找最新 API 文档
+- 解决版本兼容问题
+
+**发送内容：**
+- 说出库名称（如 "React 的最新 hooks 用法"）
+- 描述你想解决的具体问题
+
+**Context7 能做什么：**
+- 获取最新官方文档
+- 提供实用代码示例
+- 解释最新特性和变化
+
+### 3. 💡 增强功能
+
+#### 🎵 自定义通知音效
+**默认路径：** `.claude/hooks/sounds/`
+**支持格式：** `.mp3`, `.wav`, `.aiff`
+
+**替换方式：**
+```bash
+# 替换任务完成音效
+cp your-sound.mp3 .claude/hooks/sounds/complete.mp3
+
+# 替换输入提示音效  
+cp your-sound.mp3 .claude/hooks/sounds/input.mp3
 ```
 
-#### 📚 Context7 文档查询
+#### 🔒 安全扫描
+**自动功能：** 所有 MCP 调用前自动检查敏感信息
+**检查内容：**
+- API 密钥和令牌
+- 密码和敏感配置
+- 个人身份信息
+- 私有代码片段
 
-```python
-# 获取最新库文档
-mcp__context7__get_library_docs(
-    context7CompatibleLibraryID="/facebook/react",
-    topic="hooks",
-    tokens=8000
-)
+#### 🤖 智能上下文管理
+**自动功能：** 子任务自动获取项目上下文
+**工作方式：**
+- 每个新任务自动加载项目文档
+- 智能选择相关上下文信息
+- 保持会话间状态一致性
+
+### 4. 🎯 快捷指令
+
+安装后新增的 Claude Code 指令：
+
+```bash
+# 项目初始化
+claude init-chinese          # 创建中文项目结构
+
+# 文档管理  
+claude docs-update           # 更新项目文档
+claude context-check         # 检查上下文完整性
+
+# MCP 管理
+claude mcp-status            # 查看 MCP 服务状态  
+claude mcp-config            # 配置 MCP 服务器
+
+# Hook 管理
+claude hooks-test            # 测试 Hook 脚本
+claude sound-test            # 测试通知音效
 ```
 
-## 🛠 配置说明
+## 💬 使用反馈
 
-### Claude Code 设置
+### 🐛 问题反馈
+**遇到问题？** [提交 Issue](https://github.com/cfrs2005/claude-init/issues)
 
-编辑 `.claude/settings.json`:
+**常见问题类型：**
+- 安装失败或错误
+- MCP 服务器无法使用  
+- Hook 脚本不工作
+- 中文显示异常
+- 功能建议和改进
 
-```json
-{
-  "hooks": {
-    "preToolUse": ["./.claude/hooks/subagent-context-injector.sh"],
-    "userPromptSubmit": ["./.claude/hooks/gemini-context-injector.sh"]
-  },
-  "mcp": {},
-  "tools": {}
-}
-```
+### 💡 功能建议
+**想要新功能？** [发起讨论](https://github.com/cfrs2005/claude-init/discussions)
 
-### Hook 脚本说明
+**建议包含：**
+- 功能描述和使用场景
+- 期望的工作方式
+- 类似工具的参考
 
-- **subagent-context-injector.sh** - 自动为子智能体注入项目上下文
-- **gemini-context-injector.sh** - 为 Gemini 咨询自动附加项目文档  
-- **mcp-security-scan.sh** - MCP 调用安全扫描
-- **notify.sh** - 系统事件通知
-
-## 📋 项目模板
-
-### Python 项目
-```
-python-project/
-├── CLAUDE.md
-├── src/
-│   ├── CONTEXT.md
-│   ├── core/
-│   ├── api/
-│   └── utils/
-├── tests/
-├── docs/
-└── .claude/
-```
-
-### Node.js 项目
-```
-nodejs-project/
-├── CLAUDE.md  
-├── src/
-│   ├── CONTEXT.md
-│   ├── components/
-│   ├── services/
-│   └── utils/
-├── tests/
-├── docs/
-└── .claude/
-```
-
-## 🤝 贡献指南
-
-欢迎贡献代码、文档和想法！
-
-1. Fork 此仓库
-2. 创建功能分支 (`git checkout -b feature/amazing-feature`)
-3. 提交更改 (`git commit -m '添加某个很棒的功能'`)
-4. 推送到分支 (`git push origin feature/amazing-feature`)
-5. 开启 Pull Request
-
-### 开发原则
-
-- **简单直接** - 遵循 KISS 原则
-- **用户优先** - 一切为了更好的中文开发体验
-- **向后兼容** - 与原版 Claude Code Development Kit 保持兼容
-- **文档驱动** - 良好的文档是项目成功的关键
+### 🤝 参与贡献
+欢迎提交代码、文档改进和翻译优化！
 
 ## 📄 开源协议
 
@@ -216,11 +198,6 @@ nodejs-project/
 - [Claude Code Development Kit](https://github.com/peterkrueck/Claude-Code-Development-Kit) - 原始项目
 - [Anthropic](https://www.anthropic.com/) - Claude Code 平台
 - 所有贡献者和中文开发社区
-
-## 📞 联系方式
-
-- **GitHub Issues**: [提交问题和建议](https://github.com/cfrs2005/claude-init/issues)  
-- **讨论区**: [GitHub Discussions](https://github.com/cfrs2005/claude-init/discussions)
 
 ---
 
