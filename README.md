@@ -2,8 +2,23 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Language: 中文](https://img.shields.io/badge/Language-%E4%B8%AD%E6%96%87-red.svg)](README.md)
+[![Version](https://img.shields.io/github/v/release/cfrs2005/claude-init)](https://github.com/cfrs2005/claude-init/releases/latest)
+[![Downloads](https://img.shields.io/github/downloads/cfrs2005/claude-init/total)](https://github.com/cfrs2005/claude-init/releases)
+[![Stars](https://img.shields.io/github/stars/cfrs2005/claude-init)](https://github.com/cfrs2005/claude-init/stargazers)
+[![Forks](https://img.shields.io/github/forks/cfrs2005/claude-init)](https://github.com/cfrs2005/claude-init/network/members)
+[![Issues](https://img.shields.io/github/issues/cfrs2005/claude-init)](https://github.com/cfrs2005/claude-init/issues)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
+[![Platform](https://img.shields.io/badge/Platform-macOS%20%7C%20Linux%20%7C%20Windows-lightgrey)](README.md)
+[![Claude Code](https://img.shields.io/badge/Compatible-Claude%20Code-blue)](https://github.com/anthropics/claude-code)
+[![MCP](https://img.shields.io/badge/Support-MCP%20Servers-green)](README.md#mcp-服务器支持)
+
+<div align="center">
 
 🚀 **为中国开发者定制的 Claude Code 智能开发环境**
+
+[快速开始](#-快速开始) • [功能特性](#-特性) • [使用指南](#-使用指南) • [项目示例](#-项目模板) • [更新日志](CHANGELOG.md)
+
+</div>
 
 基于 [Claude Code Development Kit](https://github.com/peterkrueck/Claude-Code-Development-Kit) 的完整中文本地化版本，提供零门槛的中文 AI 编程体验。
 
@@ -37,7 +52,7 @@
 ### 一键安装
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/cfrs2005/claude-init/main/install-cn.sh | bash
+curl -fsSL https://raw.githubusercontent.com/cfrs2005/claude-init/main/install.sh | bash
 ```
 
 ### 手动安装
@@ -212,5 +227,5 @@ nodejs-project/
 🎉 **开始你的中文 AI 编程之旅吧！**
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/cfrs2005/claude-init/main/install-cn.sh | bash
+curl -fsSL https://raw.githubusercontent.com/cfrs2005/claude-init/main/install.sh | bash
 ```
