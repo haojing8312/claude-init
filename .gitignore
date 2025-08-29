@@ -1,5 +1,9 @@
+# 开发配置文件（不提交到仓库）
+CLAUDE.md
 .claude/
 .specstory/
+
+# 系统和临时文件
 *.log
 .DS_Store
 node_modules/
