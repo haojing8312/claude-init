@@ -5,7 +5,7 @@
 格式基于[保持更新日志](https://keepachangelog.com/zh-CN/1.0.0/)，
 本项目遵循[语义化版本](https://semver.org/lang/zh-CN/)。
 
-## [1.0.0] - 2024-08-29
+## [1.0.0] - 2025-08-29
 
 ### 🎉 首次发布
 - Claude Code 中文开发套件正式发布
