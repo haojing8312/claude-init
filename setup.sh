@@ -251,7 +251,7 @@ EOF
         cat >> "$config_file" << 'EOF'
     "context7": {
       "command": "npx",
-      "args": ["-y", "@upstash/context7"]
+      "args": ["-y", "@upstash/context7-mcp", "--api-key", "YOUR_CONTEXT7_API_KEY"]
     }
 EOF
         first_server=false
@@ -262,7 +262,7 @@ EOF
         cat >> "$config_file" << 'EOF'
     "gemini": {
       "command": "npx",
-      "args": ["-y", "mcp-gemini-assistant"]
+      "args": ["-y", "gemini-mcp", "--api-key", "YOUR_GEMINI_API_KEY"]
     }
 EOF
     fi
@@ -302,9 +302,12 @@ display_mcp_info() {
             echo
         fi
         
-        print_color "$CYAN" "💡 提示："
-        echo "  • MCP 服务器将在首次使用时自动安装"
-        echo "  • 无需手动配置，开箱即用"
+        print_color "$CYAN" "💡 重要配置提醒："
+        echo "  • MCP 服务器已配置，但需要设置 API 密钥才能使用"
+        echo "  • 编辑 .claude/settings.local.json，将占位符替换为真实 API 密钥"
+        echo "    - YOUR_CONTEXT7_API_KEY → 你的 Context7 API 密钥"  
+        echo "    - YOUR_GEMINI_API_KEY → 你的 Gemini API 密钥"
+        echo "  • API 密钥获取方式请参考各服务官方文档"
     fi
 }
 
