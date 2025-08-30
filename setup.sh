@@ -408,12 +408,17 @@ main() {
     echo "  $([ "$INSTALL_GEMINI" = "y" ] && echo 5 || echo 4). 运行 'claude' 开始你的中文开发之旅！"
     echo
     
-    if [ "$INSTALL_CONTEXT7" = "y" ] || [ "$INSTALL_GEMINI" = "y" ]; then
-        print_color "$YELLOW" "💡 MCP 服务器提示："
-        echo "  • 首次使用 MCP 功能时会自动安装服务器"
-        echo "  • 如遇到问题，请确保网络连接正常"
-        echo "  • MCP 功能包括：Gemini 咨询、外部文档查询等"
-    fi
+    # MCP 服务器安装指导
+    echo
+    print_color "$CYAN" "📡 推荐安装 MCP 服务器增强功能："
+    echo
+    print_color "$YELLOW" "Context7 - 获取最新库文档："
+    echo "  claude mcp add --transport http context7 https://mcp.context7.com/mcp"
+    echo
+    print_color "$YELLOW" "Gemini - 深度代码分析和咨询："
+    echo "  claude mcp add --transport sse gemini npx -y mcp-gemini-assistant"
+    echo
+    print_color "$YELLOW" "💡 MCP 服务器让 Claude Code 功能更强大，强烈推荐安装！"
 }
 
 # 运行主函数
