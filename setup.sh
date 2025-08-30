@@ -236,39 +236,38 @@ EOF
 EOF
     fi
     
-    # MCP 服务器配置部分
-    if [ "$INSTALL_CONTEXT7" = "y" ] || [ "$INSTALL_GEMINI" = "y" ]; then
-        echo "," >> "$config_file"
+    # 结束 hooks 对象
+    cat >> "$config_file" << 'EOF'
+  },
+EOF
+    
+    # MCP 服务器配置（在顶层，与 hooks 并列）
+    cat >> "$config_file" << 'EOF'
+  "mcpServers": {
+EOF
+    
+    local first_server=true
+    if [ "$INSTALL_CONTEXT7" = "y" ]; then
         cat >> "$config_file" << 'EOF'
-    "mcpServers": {
+    "context7": {
+      "command": "npx",
+      "args": ["-y", "@upstash/context7"]
+    }
 EOF
-        local first_server=true
-        
-        if [ "$INSTALL_CONTEXT7" = "y" ]; then
-            cat >> "$config_file" << 'EOF'
-      "context7": {
-        "command": "npx",
-        "args": ["-y", "@upstash/context7"]
-      }
-EOF
-            first_server=false
-        fi
-        
-        if [ "$INSTALL_GEMINI" = "y" ]; then
-            [ "$first_server" = false ] && echo "," >> "$config_file"
-            cat >> "$config_file" << 'EOF'
-      "gemini": {
-        "command": "npx",
-        "args": ["-y", "mcp-gemini-assistant"]
-      }
-EOF
-        fi
-        
+        first_server=false
+    fi
+    
+    if [ "$INSTALL_GEMINI" = "y" ]; then
+        [ "$first_server" = false ] && echo "," >> "$config_file"
         cat >> "$config_file" << 'EOF'
+    "gemini": {
+      "command": "npx",
+      "args": ["-y", "mcp-gemini-assistant"]
     }
 EOF
     fi
     
+    # 结束 mcpServers 和整个配置文件
     cat >> "$config_file" << 'EOF'
   }
 }
