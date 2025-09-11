@@ -97,7 +97,7 @@ prompt_optional_components() {
     # Gemini MCP
     print_color "$CYAN" "Gemini 助手 MCP 服务器（强烈推荐）"
     echo "  启用架构咨询和高级代码审查功能"
-    echo "  仓库：https://github.com/peterkrueck/mcp-gemini-assistant"
+    echo "  仓库：https://github.com/jamubc/gemini-mcp-tool"
     if ! safe_read_yn INSTALL_GEMINI "  安装 Gemini 集成？(y/n): " "y"; then
         exit 1
     fi
@@ -418,7 +418,7 @@ main() {
     echo "  claude mcp add --transport http context7 https://mcp.context7.com/mcp"
     echo
     print_color "$YELLOW" "Gemini - 深度代码分析和咨询："
-    echo "  claude mcp add --transport sse gemini npx -y mcp-gemini-assistant"
+    echo "  claude mcp add gemini-cli -- npx -y gemini-mcp-tool"
     echo
     print_color "$YELLOW" "💡 MCP 服务器让 Claude Code 功能更强大，强烈推荐安装！"
 }
