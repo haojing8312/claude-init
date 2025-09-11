@@ -1,188 +1,188 @@
-You are working on the current project. The user has requested to refactor specific files tagged with @ symbols in their arguments: "$ARGUMENTS"
+您正在处理当前项目。用户请求重构其参数中用 @ 符号标记的特定文件："$ARGUMENTS"
 
-## Auto-Loaded Project Context:
+## 自动加载的项目上下文：
 @/CLAUDE.md
 @/docs/ai-context/project-structure.md
 @/docs/ai-context/docs-overview.md
 
-## Step 1: Parse Tagged Files
-Extract all @ tagged file paths from the user's arguments. Only process files that are explicitly tagged with @ symbols.
+## 第 1 步：解析标记文件
+从用户参数中提取所有 @ 标记的文件路径。仅处理明确用 @ 符号标记的文件。
 
-**Example parsing:**
-- Input: "refactor @src/big-file.ts @components/Large.svelte"
-- Extract: ["src/big-file.ts", "components/Large.svelte"]
+**解析示例：**
+- 输入："refactor @src/big-file.ts @components/Large.svelte"
+- 提取：["src/big-file.ts", "components/Large.svelte"]
 
-## Step 2: Validate and Analyze Files
-For each tagged file:
-1. **Verify file exists** - If file doesn't exist, inform user and skip
-2. **Read file contents** - Understand the structure and dependencies
-3. **Analyze current directory structure** - Map existing patterns around the file
+## 第 2 步：验证和分析文件
+对于每个标记文件：
+1. **验证文件存在** - 如果文件不存在，通知用户并跳过
+2. **读取文件内容** - 理解结构和依赖关系
+3. **分析当前目录结构** - 映射文件周围的现有模式
 
-## Step 3: Intelligent Analysis Strategy Decision
-Think deeply about the safest and most effective refactoring approach based on the auto-loaded project context. Based on the initial analysis from Step 2 and the auto-loaded project context, intelligently decide the optimal approach for each file:
+## 第 3 步：智能分析策略决策
+基于自动加载的项目上下文，深入思考最安全和最有效的重构方法。基于第 2 步的初始分析和自动加载的项目上下文，智能决定每个文件的最佳方法：
 
-### Strategy Options:
+### 策略选项：
 
-**Direct Refactoring** (0-1 sub-agents):
-- Simple files with clear, obvious split points
-- Files with minimal external dependencies
-- Standard refactoring patterns (e.g., extract utils, split large classes)
-- Low risk of breaking changes
+**直接重构** (0-1 个子代理)：
+- 具有清晰、明显分割点的简单文件
+- 外部依赖最少的文件
+- 标准重构模式（例如，提取工具、拆分大类）
+- 破坏性更改风险低
 
-**Focused Analysis** (2-3 sub-agents):
-- Moderate complexity with specific concerns
-- Files with moderate dependency footprint
-- When one aspect needs deep analysis (e.g., complex dependencies OR intricate file structure)
+**重点分析** (2-3 个子代理)：
+- 具有特定关注点的中等复杂度
+- 中等依赖足迹的文件
+- 当一个方面需要深入分析时（例如，复杂的依赖关系或复杂的文件结构）
 
-**Comprehensive Analysis** (3+ sub-agents):
-- High complexity files with multiple concerns
-- Extensive dependency networks
-- Novel refactoring patterns not seen in project
-- High risk of breaking changes
-- Files that are central to multiple systems
+**全面分析** (3+ 个子代理)：
+- 具有多重关注点的高复杂度文件
+- 广泛的依赖网络
+- 项目中未见的新颖重构模式
+- 破坏性更改风险高
+- 对多个系统至关重要的文件
 
-## Step 4: Execute Chosen Strategy
+## 第 4 步：执行选定的策略
 
-### For Direct Refactoring:
-Proceed with straightforward refactoring using the initial analysis and project context.
+### 对于直接重构：
+使用初始分析和项目上下文进行直接重构。
 
-### For Sub-Agent Approaches:
-You have complete autonomy to design and launch sub-agents based on the specific refactoring needs identified. Consider these key investigation areas and design custom agents to cover what's most relevant:
+### 对于子代理方法：
+您完全有自主权根据识别的特定重构需求设计和启动子代理。考虑这些关键调查领域并设计自定义代理以覆盖最相关的内容：
 
-**Core Investigation Areas to Consider:**
-- **File Structure Analysis**: Logical component boundaries, split points, cohesion assessment
-- **Dependency Network Mapping**: Import/export analysis, usage patterns, circular dependency risks
-- **Project Pattern Compliance**: Directory structures, naming conventions, organizational patterns
-- **Impact Assessment**: Test files, configuration files, build scripts that need updates
-- **Import Update Analysis**: All files that import from the target file and need updated import paths
-- **Technology Stack Considerations**: Language-specific patterns, framework conventions
+**需考虑的核心调查领域：**
+- **文件结构分析**：逻辑组件边界、分割点、内聚评估
+- **依赖网络映射**：导入/导出分析、使用模式、循环依赖风险
+- **项目模式合规性**：目录结构、命名约定、组织模式
+- **影响评估**：需要更新的测试文件、配置文件、构建脚本
+- **导入更新分析**：所有从目标文件导入且需要更新导入路径的文件
+- **技术栈考虑**：语言特定模式、框架约定
 
-**Autonomous Sub-Agent Design Principles:**
-- **Custom Specialization**: Define agents based on the specific file's complexity and risks
-- **Flexible Agent Count**: Use as many agents as needed - scale based on actual complexity
-- **Adaptive Coverage**: Ensure critical aspects are covered without unnecessary overlap
-- **Risk-Focused Analysis**: Prioritize investigation of the highest-risk refactoring aspects
+**自主子代理设计原则：**
+- **自定义专门化**：基于特定文件的复杂性和风险定义代理
+- **灵活代理数量**：根据需要使用任意数量的代理 - 基于实际复杂度扩展
+- **自适应覆盖**：确保关键方面得到覆盖，避免不必要的重叠
+- **风险重点分析**：优先调查最高风险的重构方面
 
-**Sub-Agent Task Template:**
+**子代理任务模板：**
 ```
-Task: "Analyze [SPECIFIC_INVESTIGATION_AREA] for safe refactoring of [TARGET_FILE] related to user request '$ARGUMENTS'"
+任务："分析 [TARGET_FILE] 的 [SPECIFIC_INVESTIGATION_AREA] 以进行与用户请求 '$ARGUMENTS' 相关的安全重构"
 
-Standard Investigation Workflow:
-1. Review auto-loaded project context (CLAUDE.md, project-structure.md, docs-overview.md)
-2. [CUSTOM_ANALYSIS_STEPS] - Investigate the specific area thoroughly
-3. Return actionable findings that support safe and effective refactoring
+标准调查工作流：
+1. 审查自动加载的项目上下文（CLAUDE.md、project-structure.md、docs-overview.md）
+2. [CUSTOM_ANALYSIS_STEPS] - 彻底调查特定领域
+3. 返回支持安全和有效重构的可操作发现
 
-Return comprehensive findings addressing this investigation area."
+返回解决此调查领域的综合发现。"
 ```
 
-**CRITICAL: When launching sub-agents, always use parallel execution with a single message containing multiple Task tool invocations.**
+**关键：启动子代理时，始终使用并行执行，在包含多个 Task 工具调用的单个消息中。**
 
 
-## Step 5: Synthesize Analysis and Plan Refactoring
+## 第 5 步：综合分析并计划重构
 
-Think deeply about integrating findings from all sub-agent investigations for safe and effective refactoring. Combine findings from all agents to create optimal refactoring strategy:
+深入思考如何整合所有子代理调查的发现以进行安全和有效的重构。合并所有代理的发现以创建最佳重构策略：
 
-### Integration Analysis
-- **File Structure**: Use File Analysis Agent's component breakdown
-- **Organization**: Apply Pattern Recognition Agent's directory recommendations
-- **Safety**: Implement Dependency Analysis Agent's import/export strategy
-- **Completeness**: Address Impact Assessment Agent's broader concerns
+### 整合分析
+- **文件结构**：使用文件分析代理的组件分解
+- **组织**：应用模式识别代理的目录建议
+- **安全性**：实施依赖分析代理的导入/导出策略
+- **完整性**：解决影响评估代理的更广泛关注点
 
-### Refactoring Strategy Decision
-Based on synthesized analysis, determine:
-- **Split granularity**: How many files and what logical divisions
-- **Directory structure**: Same-level, subdirectory, or existing directory placement
-- **Import/export strategy**: How to restructure exports and update all consuming files
-- **File naming**: Following project conventions and clarity
+### 重构策略决策
+基于综合分析，确定：
+- **分割粒度**：多少文件和什么逻辑划分
+- **目录结构**：同级、子目录或现有目录放置
+- **导入/导出策略**：如何重构导出并更新所有使用文件
+- **文件命名**：遵循项目约定和清晰性
 
-### Risk Assessment
-- **Breaking changes**: Identify and mitigate potential issues
-- **Dependency conflicts**: Plan import/export restructuring
-- **Test impacts**: Plan for test file updates
-- **Documentation needs**: Identify doc updates required
+### 风险评估
+- **破坏性更改**：识别并缓解潜在问题
+- **依赖冲突**：计划导入/导出重构
+- **测试影响**：计划测试文件更新
+- **文档需求**：识别需要的文档更新
 
-## Step 6: Refactoring Value Assessment
+## 第 6 步：重构价值评估
 
-### Evaluate Refactoring Worth
-After synthesizing all analysis, critically evaluate whether the proposed refactoring will actually improve the codebase:
+### 评估重构价值
+综合所有分析后，批判性评估提出的重构是否实际会改进代码库：
 
-**Positive Indicators (Worth Refactoring):**
-- File significantly exceeds reasonable size limits (500+ lines for components, 1000+ for utilities)
-- Clear separation of concerns violations (UI mixed with business logic, multiple unrelated features)
-- High cyclomatic complexity that would be reduced
-- Repeated code patterns that could be abstracted
-- Poor testability that would improve with modularization
-- Dependencies would become cleaner and more maintainable
-- Aligns with project's architectural patterns
+**积极指标（值得重构）：**
+- 文件显著超过合理大小限制（组件 500+ 行，工具 1000+ 行）
+- 明确的关注点分离违规（UI 与业务逻辑混合，多个不相关功能）
+- 会降低的高圈复杂度
+- 可以抽象的重复代码模式
+- 模块化会改善的较差可测试性
+- 依赖关系会更清洁和更易维护
+- 符合项目的架构模式
 
-**Negative Indicators (Not Worth Refactoring):**
-- File is already well-organized despite its size
-- Splitting would create artificial boundaries that reduce clarity
-- Would introduce unnecessary complexity or abstraction
-- Dependencies would become more convoluted
-- File serves a single, cohesive purpose effectively
-- Refactoring would violate project conventions
-- Minimal actual improvement in maintainability
+**消极指标（不值得重构）：**
+- 文件尽管规模大但已经组织良好
+- 分割会创建降低清晰度的人为边界
+- 会引入不必要的复杂性或抽象
+- 依赖关系会更复杂
+- 文件有效地服务于单一、内聚的目的
+- 重构会违反项目约定
+- 可维护性的实际改进很小
 
-### Decision Point
-Based on the assessment:
+### 决策点
+基于评估：
 
-**If Refactoring IS Worth It:**
-- Print clear summary of benefits: "✅ This refactoring will improve the codebase by: [specific benefits]"
-- Proceed automatically to Step 7 (Execute Refactoring)
+**如果重构值得：**
+- 打印清晰的收益摘要："✅ 此重构将通过以下方式改进代码库：[具体收益]"
+- 自动继续第 7 步（执行重构）
 
-**If Refactoring IS NOT Worth It:**
-- Be brutally honest about why: "❌ This refactoring is not recommended because: [specific reasons]"
-- Explain what makes the current structure acceptable
-- Ask user explicitly: "The file is currently well-structured for its purpose. Do you still want to proceed with the refactoring? (yes/no)"
-- Only continue if user confirms
+**如果重构不值得：**
+- 坦诚说明原因："❌ 不建议此重构，因为：[具体原因]"
+- 解释当前结构可接受的原因
+- 明确询问用户："文件目前对其目的结构良好。您仍要继续重构吗？（是/否）"
+- 仅在用户确认时继续
 
-## Step 7: Execute Refactoring
+## 第 7 步：执行重构
 
-Implement the refactoring based on the synthesized analysis:
+基于综合分析实施重构：
 
-### File Creation Order
-1. **Create directories** - Create any new subdirectories needed
-2. **Create core files** - Start with main/index files
-3. **Create supporting files** - Types, utils, constants
-4. **Update imports** - Fix all import/export statements
-5. **Update original file** - Replace with new modular structure
+### 文件创建顺序
+1. **创建目录** - 创建任何需要的新子目录
+2. **创建核心文件** - 从主/索引文件开始
+3. **创建支持文件** - 类型、工具、常量
+4. **更新导入** - 修复所有导入/导出语句
+5. **更新原始文件** - 替换为新的模块化结构
 
-### Import/Export Management
-- **Update all consuming files** - Modify import statements to point to new file locations
-- **Restructure exports** - Organize exports in the new file structure
-- **Update relative imports** - Fix paths throughout the codebase
-- **Follow naming conventions** - Use project's established patterns
+### 导入/导出管理
+- **更新所有使用文件** - 修改导入语句以指向新文件位置
+- **重构导出** - 在新文件结构中组织导出
+- **更新相对导入** - 修复整个代码库中的路径
+- **遵循命名约定** - 使用项目既定模式
 
-### Quality Assurance
-- **Preserve functionality** - Ensure no breaking changes
-- **Maintain type safety** - Keep all TypeScript types intact
-- **Follow coding standards** - Apply project's style guidelines
-- **Test compatibility** - Verify imports work correctly
-
-
-## Step 8: Quality Verification
-
-For each refactored file:
-- **Check imports** - Verify all imports resolve correctly
-- **Run type checks** - Ensure TypeScript compilation passes
-- **Test functionality** - Confirm no breaking changes
-- **Validate structure** - Ensure new organization follows project patterns
+### 质量保证
+- **保持功能** - 确保无破坏性更改
+- **维护类型安全** - 保持所有 TypeScript 类型完整
+- **遵循编码标准** - 应用项目的样式指南
+- **测试兼容性** - 验证导入正常工作
 
 
-## Error Handling
-- **File not found** - Skip and inform user
-- **Not worth refactoring** - Skip files that are good as is and give users an explanation.
-- **Parse errors** - Report syntax issues and skip
-- **Import conflicts** - Resolve or report issues
+## 第 8 步：质量验证
 
-## Summary Format
-Provide a comprehensive summary of:
-- **Analysis Results**: Key findings from each sub-agent
-- **Refactoring Strategy**: Chosen approach and rationale
-- **Value Assessment**: Whether refactoring improves the code (from Step 6)
-- **Files Created**: New structure with explanations (if refactoring proceeded)
-- **Dependencies Fixed**: Import/export changes made (if refactoring proceeded)
-- **Issues Encountered**: Any problems and resolutions
+对于每个重构文件：
+- **检查导入** - 验证所有导入正确解析
+- **运行类型检查** - 确保 TypeScript 编译通过
+- **测试功能** - 确认无破坏性更改
+- **验证结构** - 确保新组织遵循项目模式
 
-Now proceed with multi-agent analysis and refactoring of the tagged files: $ARGUMENTS
+
+## 错误处理
+- **文件未找到** - 跳过并通知用户
+- **不值得重构** - 跳过已经良好的文件并向用户解释原因
+- **解析错误** - 报告语法问题并跳过
+- **导入冲突** - 解决或报告问题
+
+## 摘要格式
+提供全面摘要：
+- **分析结果**：每个子代理的关键发现
+- **重构策略**：选择的方法和理由
+- **价值评估**：重构是否改进代码（来自第 6 步）
+- **创建的文件**：带解释的新结构（如果进行了重构）
+- **修复的依赖**：进行的导入/导出更改（如果进行了重构）
+- **遇到的问题**：任何问题和解决方案
+
+现在继续标记文件的多代理分析和重构：$ARGUMENTS

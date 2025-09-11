@@ -1,162 +1,162 @@
-# 🔧 Command Templates
+# 🔧 命令模板
 
-Orchestration templates that enable Claude Code to coordinate multi-agent workflows for different development tasks.
+编排模板，使 Claude Code 能够协调多代理工作流以完成不同的开发任务。
 
-## Overview
+## 概述
 
-After reading the [main kit documentation](../README.md), you'll understand how these commands fit into the integrated system. Each command:
+阅读[主要套件文档](../README.md)后，您将了解这些命令如何融入集成系统。每个命令：
 
-- **Auto-loads** the appropriate documentation tier for its task
-- **Spawns specialized agents** based on complexity 
-- **Integrates MCP servers** when external expertise helps
-- **Maintains documentation** to keep AI context current
+- **自动加载**适合其任务的适当文档层级
+- **生成专门的子代理**基于复杂度
+- **集成 MCP 服务器**当外部专业帮助有用时
+- **维护文档**以保持 AI 上下文最新
 
-### 🚀 Automatic Context Injection
+### 🚀 自动上下文注入
 
-All commands benefit from automatic context injection via the `subagent-context-injector.sh` hook:
+所有命令都通过 `subagent-context-injector.sh` 钩子受益于自动上下文注入：
 
-- **Core documentation auto-loaded**: Every command and sub-agent automatically receives `@/docs/CLAUDE.md`, `@/docs/ai-context/project-structure.md`, and `@/docs/ai-context/docs-overview.md`
-- **No manual context loading**: Sub-agents spawned by commands automatically have access to essential project documentation
-- **Consistent knowledge**: All agents start with the same foundational understanding
+- **核心文档自动加载**：每个命令和子代理自动接收 `@/docs/CLAUDE.md`、`@/docs/ai-context/project-structure.md` 和 `@/docs/ai-context/docs-overview.md`
+- **无需手动上下文加载**：由命令生成的子代理自动访问基本项目文档
+- **一致的知识**：所有代理都以相同的基础理解开始
 
-## Available Commands
+## 可用命令
 
 ### 📊 `/full-context`
-**Purpose**: Comprehensive context gathering and analysis when you need deep understanding or plan to execute code changes.
+**用途**：当您需要深入理解或计划执行代码更改时，进行全面的上下文收集和分析。
 
-**When to use**:
-- Starting work on a new feature or bug
-- Need to understand how systems interconnect
-- Planning architectural changes
-- Any task requiring thorough analysis before implementation
+**使用时机**：
+- 开始处理新功能或错误
+- 需要了解系统如何互连
+- 计划架构更改
+- 实施前需要彻底分析的任何任务
 
-**How it works**: Adaptively scales from direct analysis to multi-agent orchestration based on request complexity. Agents read documentation, analyze code, map dependencies, and consult MCP servers as needed.
+**工作原理**：根据请求复杂度自适应地从直接分析扩展到多代理编排。代理阅读文档、分析代码、映射依赖关系，并根据需要咨询 MCP 服务器。
 
 ### 🔍 `/code-review` 
-**Purpose**: Get multiple expert perspectives on code quality, focusing on high-impact findings rather than nitpicks.
+**用途**：从多个专家角度获取代码质量反馈，专注于高影响力的发现，而非吹毛求疵。
 
-**When to use**:
-- After implementing new features
-- Before merging important changes
-- When you want security, performance, and architecture insights
-- Need confidence in code quality
+**使用时机**：
+- 实施新功能后
+- 在合并重要更改之前
+- 当您需要安全性、性能和架构洞察时
+- 需要对代码质量有信心
 
-**How it works**: Spawns specialized agents (security, performance, architecture) that analyze in parallel. Each agent focuses on critical issues that matter for production code.
+**工作原理**：生成并行分析的专业化代理（安全、性能、架构）。每个代理专注于生产代码的关键问题。
 
-### 🧠 `/gemini-consult` *(Requires Gemini MCP Server)*
-**Purpose**: Engage in deep, iterative conversations with Gemini for complex problem-solving and architectural guidance.
+### 🧠 `/gemini-consult` *(需要 Gemini MCP 服务器)*
+**用途**：与 Gemini 进行深入的迭代对话，以解决复杂问题和获取架构指导。
 
-**When to use**:
-- Tackling complex architectural decisions
-- Need expert guidance on implementation approaches
-- Debugging intricate issues across multiple files
-- Exploring optimization strategies
-- When you need a thinking partner for difficult problems
+**使用时机**：
+- 处理复杂的架构决策
+- 需要实施方法的专业指导
+- 调试跨多个文件的复杂问题
+- 探索优化策略
+- 当您需要解决困难问题的思考伙伴时
 
-**How it works**: Creates persistent conversation sessions with Gemini, automatically attaching project context and MCP-ASSISTANT-RULES.md. Supports iterative refinement through follow-up questions and implementation feedback.
+**工作原理**：与 Gemini 创建持久对话会话，自动附加项目上下文和 MCP-ASSISTANT-RULES.md。通过后续问题和实施反馈支持迭代改进。
 
-**Key features**:
-- Context-aware problem detection when no arguments provided
-- Persistent sessions maintained throughout problem lifecycle
-- Automatic attachment of foundational project documentation
-- Support for follow-up questions with session continuity
+**主要特性**：
+- 未提供参数时进行上下文感知问题检测
+- 在整个问题生命周期中维护持久会话
+- 自动附加基础项目文档
+- 支持会话连续性的后续问题
 
 ### 📝 `/update-docs`
-**Purpose**: Keep documentation synchronized with code changes, ensuring AI context remains current.
+**用途**：保持文档与代码更改同步，确保 AI 上下文保持最新。
 
-**When to use**:
-- After modifying code
-- After adding new features
-- When project structure changes
-- Following any significant implementation
+**使用时机**：
+- 修改代码后
+- 添加新功能后
+- 当项目结构更改时
+- 任何重要实施后
 
-**How it works**: Analyzes what changed and updates the appropriate CLAUDE.md files across all tiers. Maintains the context that future AI sessions will rely on.
+**工作原理**：分析更改内容并在所有层级更新适当的 CLAUDE.md 文件。维护未来 AI 会话将依赖的上下文。
 
 ### 📄 `/create-docs`
-**Purpose**: Generate initial documentation structure for existing projects that lack AI-optimized documentation.
+**用途**：为缺乏 AI 优化文档的现有项目生成初始文档结构。
 
-**When to use**:
-- Adopting the framework in an existing project
-- Starting documentation from scratch
-- Need to document legacy code
-- Setting up the 3-tier structure
+**使用时机**：
+- 在现有项目中采用框架
+- 从头开始文档
+- 需要记录遗留代码
+- 设置 3 层级结构
 
-**How it works**: Analyzes your project structure and creates appropriate CLAUDE.md files at each tier, establishing the foundation for AI-assisted development.
+**工作原理**：分析您的项目结构并在每个层级创建适当的 CLAUDE.md 文件，建立 AI 辅助开发的基础。
 
 ### ♻️ `/refactor`
-**Purpose**: Intelligently restructure code while maintaining functionality and updating all dependencies.
+**用途**：在保持功能的同时智能重构代码，并更新所有依赖关系。
 
-**When to use**:
-- Breaking up large files
-- Improving code organization
-- Extracting reusable components
-- Cleaning up technical debt
+**使用时机**：
+- 拆分大文件
+- 改善代码组织
+- 提取可重用组件
+- 清理技术债务
 
-**How it works**: Analyzes file structure, maps dependencies, identifies logical split points, and handles all import/export updates across the codebase.
+**工作原理**：分析文件结构、映射依赖关系、识别逻辑分割点，并处理整个代码库中的所有导入/导出更新。
 
 ### 🤝 `/handoff`
-**Purpose**: Preserve context when ending a session or when the conversation becomes too long.
+**用途**：在结束会话或对话变得过长时保留上下文。
 
-**When to use**:
-- Ending a work session
-- Context limit approaching
-- Switching between major tasks
-- Supplementing `/compact` with permanent storage
+**使用时机**：
+- 结束工作会话
+- 上下文限制临近
+- 在主要任务之间切换
+- 用永久存储补充 `/compact`
 
-**How it works**: Updates the handoff documentation with session achievements, current state, and next steps. Ensures smooth continuation in future sessions.
+**工作原理**：将会话成就、当前状态和后续步骤更新到交接文档。确保未来会话的顺利继续。
 
-## Integration Patterns
+## 集成模式
 
-### Typical Workflow
+### 典型工作流
 ```bash
-/full-context "implement user notifications"    # Understand
-# ... implement the feature ...
-/code-review "review notification system"       # Validate  
-/update-docs "document notification feature"    # Synchronize
-/handoff "completed notification system"        # Preserve
+/full-context "实施用户通知"    # 理解
+# ... 实施功能 ...
+/code-review "审查通知系统"       # 验证  
+/update-docs "记录通知功能"    # 同步
+/handoff "完成通知系统"        # 保留
 ```
 
-### Quick Analysis
+### 快速分析
 ```bash
-/full-context "why is the API slow?"           # Investigate
-# ... apply fixes ...
-/update-docs "document performance fixes"       # Update context
+/full-context "为什么 API 慢？"           # 调查
+# ... 应用修复 ...
+/update-docs "记录性能修复"       # 更新上下文
 ```
 
-### Major Refactoring
+### 主要重构
 ```bash
-/full-context "analyze authentication module"   # Understand current state
-/refactor "@auth/large-auth-file.ts"          # Restructure
-/code-review "review refactored auth"          # Verify quality
-/update-docs "document new auth structure"     # Keep docs current
+/full-context "分析身份验证模块"   # 理解当前状态
+/refactor "@auth/large-auth-file.ts"          # 重构
+/code-review "审查重构的身份验证"          # 验证质量
+/update-docs "记录新的身份验证结构"     # 保持文档最新
 ```
 
-### Complex Problem Solving
+### 复杂问题解决
 ```bash
-/gemini-consult "optimize real-time data pipeline" # Start consultation
-# ... implement suggested approach ...
-/gemini-consult                                    # Follow up with results
-/update-docs "document optimization approach"      # Capture insights
+/gemini-consult "优化实时数据管道" # 开始咨询
+# ... 实施建议方法 ...
+/gemini-consult                                    # 跟进结果
+/update-docs "记录优化方法"      # 捕获洞察
 ```
 
-## Customization
+## 自定义
 
-Each command template can be adapted:
+每个命令模板都可以调整：
 
-- **Adjust agent strategies** - Modify how many agents spawn and their specializations
-- **Change context loading** - Customize which documentation tiers load
-- **Tune MCP integration** - Adjust when to consult external services
-- **Modify output formats** - Tailor results to your preferences
+- **调整代理策略** - 修改生成多少代理及其专门化
+- **更改上下文加载** - 自定义加载哪些文档层级
+- **调整 MCP 集成** - 调整何时咨询外部服务
+- **修改输出格式** - 根据您的偏好定制结果
 
-Commands are stored in `.claude/commands/` and can be edited directly.
+命令存储在 `.claude/commands/` 中，可以直接编辑。
 
-## Key Principles
+## 关键原则
 
-1. **Commands work together** - Each command builds on others' outputs
-2. **Documentation stays current** - Commands maintain their own context
-3. **Complexity scales naturally** - Simple tasks stay simple, complex tasks get sophisticated analysis
-4. **Context is continuous** - Information flows between sessions through documentation
+1. **命令协同工作** - 每个命令都建立在其他命令的输出之上
+2. **文档保持最新** - 命令维护自己的上下文
+3. **复杂度自然扩展** - 简单任务保持简单，复杂任务获得复杂分析
+4. **上下文是连续的** - 信息通过文档在会话之间流动
 
 ---
 
-*For detailed implementation of each command, see the individual command files in this directory.*
+*有关每个命令的详细实施，请参阅此目录中的个别命令文件。*
