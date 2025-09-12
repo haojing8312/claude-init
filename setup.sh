@@ -415,10 +415,10 @@ main() {
     print_color "$CYAN" "📡 推荐安装 MCP 服务器增强功能："
     echo
     print_color "$YELLOW" "Context7 - 获取最新库文档："
-    echo "  claude mcp add --transport http context7 https://mcp.context7.com/mcp"
+    echo "  claude mcp add context7 --scope project -- npx -y @upstash/context7-mcp --api-key YOUR_CONTEXT7_API_KEY"
     echo
     print_color "$YELLOW" "Gemini - 深度代码分析和咨询："
-    echo "  claude mcp add gemini-cli -- npx -y gemini-mcp-tool"
+    echo "  claude mcp add gemini-cli --scope project -- npx -y gemini-mcp-tool"
     echo
     print_color "$YELLOW" "💡 MCP 服务器让 Claude Code 功能更强大，强烈推荐安装！"
 }
