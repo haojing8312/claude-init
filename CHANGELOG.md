@@ -5,6 +5,17 @@
 格式基于[保持更新日志](https://keepachangelog.com/zh-CN/1.0.0/)，
 本项目遵循[语义化版本](https://semver.org/lang/zh-CN/)。
 
+## [1.2.6] - 2025-09-13
+
+### 🔧 文件提交修复
+- **修复 .gitignore 规则** - 将 `.claude/` 改为 `/.claude/`，只忽略根目录的配置文件
+- **添加缺失的 mcp-status.md** - 补充提交 `/mcp-status` 命令模板文件
+
+### 📋 技术说明
+- 之前 `.gitignore` 中的 `.claude/` 规则意外忽略了 `templates/.claude/` 目录
+- 导致 `mcp-status.md` 等模板文件未被提交到远程仓库
+- 现在修正为只忽略项目根目录的 `.claude/` 用户配置目录
+
 ## [1.2.5] - 2025-09-13
 
 ### 🔧 重要修复

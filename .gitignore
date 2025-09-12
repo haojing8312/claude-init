@@ -1,6 +1,6 @@
 # 开发配置文件（不提交到仓库）
 CLAUDE.md
-.claude/
+/.claude/
 .specstory/
 
 # 系统和临时文件
