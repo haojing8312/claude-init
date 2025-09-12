@@ -153,26 +153,36 @@ cp your-sound.mp3 .claude/hooks/sounds/input.mp3
 - 智能选择相关上下文信息
 - 保持会话间状态一致性
 
-### 4. 🎯 快捷指令
+### 4. 🎯 Claude Code 斜杠命令
 
-安装后新增的 Claude Code 指令：
+安装后可使用的内置 Claude Code 命令：
 
 ```bash
-# 项目初始化
-claude init-chinese          # 创建中文项目结构
+# 📊 上下文分析
+/full-context               # 全面上下文收集和分析
 
-# 文档管理  
-claude docs-update           # 更新项目文档
-claude context-check         # 检查上下文完整性
+# 🔍 代码质量
+/code-review               # 多专家角度代码审查  
 
-# MCP 管理
-claude mcp-status            # 查看 MCP 服务状态  
-claude mcp-config            # 配置 MCP 服务器
+# 🧠 AI 咨询 
+/gemini-consult            # 与 Gemini 深入对话咨询
 
-# Hook 管理
-claude hooks-test            # 测试 Hook 脚本
-claude sound-test            # 测试通知音效
+# 📝 文档管理
+/create-docs               # 创建 AI 优化文档结构
+/update-docs               # 保持文档与代码同步
+
+# ♻️ 代码维护
+/refactor                  # 智能重构代码
+
+# 🤝 会话管理  
+/handoff                   # 保留上下文和任务状态
+
+# 📡 MCP 工具
+/mcp-status                # 检查 MCP 服务器状态
 ```
+
+**使用方式：** 直接在 Claude Code 中输入斜杠命令  
+**自动功能：** 所有命令自动获得项目上下文注入
 
 ## 💬 使用反馈
 

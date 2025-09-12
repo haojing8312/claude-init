@@ -15,19 +15,10 @@ NC='\033[0m'
 
 # 配置变量
 TARGET_DIR="${INSTALLER_ORIGINAL_PWD:-$(pwd)}"
-INSTALL_CONTEXT7="n"
-INSTALL_GEMINI="n"
+# 默认安装所有 MCP 服务器
+INSTALL_CONTEXT7="y"
+INSTALL_GEMINI="y"
 INSTALL_NOTIFICATIONS="y"
-IS_INTERACTIVE=true
-
-# 检查是否为交互式终端
-if [ ! -t 0 ]; then
-    IS_INTERACTIVE=false
-    # 非交互式模式下的默认配置
-    INSTALL_CONTEXT7="y"
-    INSTALL_GEMINI="y"
-    INSTALL_NOTIFICATIONS="y"
-fi
 
 print_color() {
     local color=$1
@@ -74,41 +65,10 @@ print_header() {
     echo
 }
 
-# 询问可选组件
+# 直接开始安装，不再询问用户
 prompt_optional_components() {
-    if [ "$IS_INTERACTIVE" = false ]; then
-        print_color "$CYAN" "🤖 非交互模式：启用所有 MCP 功能"
-        return 0
-    fi
-    
-    echo
-    print_color "$YELLOW" "可选组件配置："
-    echo
-    
-    # Context7 MCP
-    print_color "$CYAN" "Context7 MCP 服务器（强烈推荐）"
-    echo "  为外部库提供最新文档支持（React、FastAPI 等）"
-    echo "  仓库：https://github.com/upstash/context7"
-    if ! safe_read_yn INSTALL_CONTEXT7 "  安装 Context7 集成？(y/n): " "y"; then
-        exit 1
-    fi
-    echo
-    
-    # Gemini MCP
-    print_color "$CYAN" "Gemini 助手 MCP 服务器（强烈推荐）"
-    echo "  启用架构咨询和高级代码审查功能"
-    echo "  仓库：https://github.com/jamubc/gemini-mcp-tool"
-    if ! safe_read_yn INSTALL_GEMINI "  安装 Gemini 集成？(y/n): " "y"; then
-        exit 1
-    fi
-    echo
-    
-    # 通知系统
-    print_color "$CYAN" "通知系统（便利功能）"
-    echo "  任务完成或需要输入时播放音频提醒"
-    if ! safe_read_yn INSTALL_NOTIFICATIONS "  设置通知 Hook？(y/n): " "y"; then
-        exit 1
-    fi
+    print_color "$CYAN" "🚀 默认安装所有 MCP 功能和通知系统"
+    return 0
 }
 
 # 生成 settings.local.json 配置
@@ -260,9 +220,9 @@ EOF
     if [ "$INSTALL_GEMINI" = "y" ]; then
         [ "$first_server" = false ] && echo "," >> "$config_file"
         cat >> "$config_file" << 'EOF'
-    "gemini": {
+    "gemini-mcp-tool": {
       "command": "npx",
-      "args": ["-y", "gemini-mcp", "--api-key", "YOUR_GEMINI_API_KEY"]
+      "args": ["-y", "gemini-mcp-tool"]
     }
 EOF
     fi
@@ -278,37 +238,29 @@ EOF
 
 # 显示 MCP 服务器信息
 display_mcp_info() {
-    if [ "$INSTALL_CONTEXT7" = "y" ] || [ "$INSTALL_GEMINI" = "y" ]; then
-        echo
-        print_color "$BLUE" "=== MCP 服务器设置信息 ==="
-        echo
-        print_color "$GREEN" "✅ MCP 服务器已配置到 settings.local.json 中！"
-        echo
-        echo "配置的服务器："
-        
-        if [ "$INSTALL_CONTEXT7" = "y" ]; then
-            print_color "$YELLOW" "📚 Context7 MCP 服务器："
-            echo "  • 提供最新外部库文档"
-            echo "  • 支持 React、FastAPI、Next.js 等"
-            echo "  • 使用方法：mcp__context7__get_library_docs"
-            echo
-        fi
-        
-        if [ "$INSTALL_GEMINI" = "y" ]; then
-            print_color "$YELLOW" "🧠 Gemini MCP 服务器："
-            echo "  • 深度架构咨询"
-            echo "  • 高级代码审查"
-            echo "  • 使用方法：mcp__gemini__consult_gemini"
-            echo
-        fi
-        
-        print_color "$CYAN" "💡 重要配置提醒："
-        echo "  • MCP 服务器已配置，但需要设置 API 密钥才能使用"
-        echo "  • 编辑 .claude/settings.local.json，将占位符替换为真实 API 密钥"
-        echo "    - YOUR_CONTEXT7_API_KEY → 你的 Context7 API 密钥"  
-        echo "    - YOUR_GEMINI_API_KEY → 你的 Gemini API 密钥"
-        echo "  • API 密钥获取方式请参考各服务官方文档"
-    fi
+    echo
+    print_color "$BLUE" "=== MCP 服务器设置信息 ==="
+    echo
+    print_color "$GREEN" "✅ MCP 服务器已配置到 settings.local.json 中！"
+    echo
+    echo "配置的服务器："
+    
+    print_color "$YELLOW" "📚 Context7 MCP 服务器："
+    echo "  • 提供最新外部库文档"
+    echo "  • 支持 React、FastAPI、Next.js 等"
+    echo "  • 使用方法：mcp__context7__get_library_docs"
+    echo
+    
+    print_color "$YELLOW" "🧠 Gemini MCP 服务器："
+    echo "  • 深度架构咨询"
+    echo "  • 高级代码审查"
+    echo "  • 使用方法：mcp__gemini__consult_gemini"
+    echo
+    
+    print_color "$CYAN" "💡 重要配置提醒："
+    echo "  • Context7 需要 API 密钥，编辑 .claude/settings.local.json"
+    echo "    替换 YOUR_CONTEXT7_API_KEY 为你的真实 API 密钥"
+    echo "  • Gemini MCP 不需要 API 密钥，直接使用"
 }
 
 # 主安装流程
@@ -403,11 +355,7 @@ main() {
     echo "  2. 阅读 docs/README.md 学习文档系统"
     echo "  3. 参考 examples/ 目录中的使用示例"
     
-    if [ "$INSTALL_GEMINI" = "y" ]; then
-        echo "  4. 编辑 MCP-ASSISTANT-RULES.md 设置 Gemini 编码标准"
-    fi
-    
-    echo "  $([ "$INSTALL_GEMINI" = "y" ] && echo 5 || echo 4). 运行 'claude' 开始你的中文开发之旅！"
+    echo "  4. 运行 'claude' 开始你的中文开发之旅！"
     echo
     
     # MCP 服务器安装指导
@@ -418,7 +366,7 @@ main() {
     echo "  claude mcp add context7 --scope project -- npx -y @upstash/context7-mcp --api-key YOUR_CONTEXT7_API_KEY"
     echo
     print_color "$YELLOW" "Gemini - 深度代码分析和咨询："
-    echo "  claude mcp add gemini-cli --scope project -- npx -y gemini-mcp-tool"
+    echo "  claude mcp add gemini --scope project -- npx -y gemini-mcp-tool"
     echo
     print_color "$YELLOW" "💡 MCP 服务器让 Claude Code 功能更强大，强烈推荐安装！"
 }
