@@ -20,11 +20,8 @@
 
 ---
 
-💫 **感谢 [AnyRouter](https://anyrouter.top/register?aff=86mM) 赞助支持！**
 
-🌟 加入 Claude Code 的世界，开启智能编程的美妙旅程！AnyRouter 为中国开发者提供**免费的 Claude Code 转发节点**，无需翻墙即可畅享 AI 编程体验。[立即免费注册 →](https://anyrouter.top/register?aff=86mM)
-
-🚀 **新增智谱AI引擎**: 最新集成了 **[智谱大模型 (BigModel.cn)](https://www.bigmodel.cn/invite?icode=jDJudw7U%2FCqRSv12%2BAkDZJmwcr074zMJTpgMb8zZZvg%3D)**。其旗舰 **GLM-4.5** 模型拥有媲美 Claude 的代码能力，并提供极具吸引力的包月服务，是入门和高频使用的绝佳选择。 **[点此注册即领2000万免费Tokens →](https://www.bigmodel.cn/invite?icode=jDJudw7U%2FCqRSv12%2BAkDZJmwcr074zMJTpgMb8zZZvg%3D)**
+🚀 **新增智谱AI引擎**: 最新集成了 **[智谱大模型 (BigModel.cn)](https://www.bigmodel.cn/claude-code?ic=H0RNPV3LNZ)**。其旗舰 **GLM-4.5** 模型拥有媲美 Claude 的代码能力，并提供极具吸引力的包月服务，是入门和高频使用的绝佳选择。 **[点此注册即领2000万免费Tokens →](https://www.bigmodel.cn/claude-code?ic=H0RNPV3LNZ)**
 
 </div>
 
