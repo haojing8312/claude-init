@@ -1,146 +1,146 @@
-You are concluding work on the current project and need to create a comprehensive handoff for the next AI session. This command intelligently analyzes your current session achievements and updates the handoff document with both auto-detected progress and user-provided context.
+您正在结束当前项目的工作，需要为下一个 AI 会话创建全面的交接。此命令智能地分析您当前会话的成就并使用自动检测的进度和用户提供的上下文更新交接文档。
 
-## Auto-Loaded Project Context:
+## 自动加载的项目上下文：
 @docs/ai-context/HANDOFF.md
 @/CLAUDE.md
 
-## Step 1: Process User Arguments
+## 第 1 步：处理用户参数
 
-Handle the arguments flexibly:
-- **With Arguments**: `$ARGUMENTS` provides user context about what was accomplished or attempted
-- **Without Arguments**: Focus purely on auto-detection from session analysis
+灵活处理参数：
+- **带参数**：`$ARGUMENTS` 提供关于完成或尝试内容的用户上下文
+- **不带参数**：纯粹专注于从会话分析自动检测
 
-User provided context: "$ARGUMENTS"
+用户提供的上下文："$ARGUMENTS"
 
-## Step 2: Analyze Current Session Achievements
+## 第 2 步：分析当前会话成就
 
-Think about what was accomplished in this session and how to best capture it for handoff. Review your recent conversation and tool usage to identify significant work:
+思考在此会话中完成了什么以及如何最好地将其捕获以供交接。审查您最近的对话和工具使用以识别重要工作：
 
-**Auto-Detect Evidence of:**
-- **File Operations** (Write, Edit, MultiEdit tools) - what files were modified and why
-- **New Features** - functionality added or implemented
-- **Bug Fixes** - issues resolved or debugging attempts
-- **Architecture Changes** - structural improvements or refactoring
-- **Configuration Updates** - settings, dependencies, or environment changes
-- **Documentation Work** - updates to documentation files
-- **Incomplete Work** - attempts that didn't reach completion
-- **Blockers Encountered** - issues that prevented completion
+**自动检测以下内容的证据：**
+- **文件操作**（Write、Edit、MultiEdit 工具）- 修改了哪些文件以及为什么
+- **新功能** - 添加或实现的功能
+- **错误修复** - 解决的问题或调试尝试
+- **架构更改** - 结构改进或重构
+- **配置更新** - 设置、依赖或环境更改
+- **文档工作** - 对文档文件的更新
+- **未完成的工作** - 未完成的尝试
+- **遇到的阻塞** - 阻止完成的问题
 
-**Generate Session Summary:**
+**生成会话摘要：**
 ```
-Session Analysis:
-- Primary work area: [component/domain affected]
-- Main accomplishments: [key achievements]
-- Files modified: [list of changed files]
-- Status: [completed/in-progress/blocked]
-- User context: [if $ARGUMENTS provided]
+会话分析：
+- 主要工作区域：[受影响的组件/领域]
+- 主要成就：[关键成就]
+- 修改的文件：[更改文件列表]
+- 状态：[已完成/进行中/被阻塞]
+- 用户上下文：[如果提供了 $ARGUMENTS]
 ```
 
-## Step 3: Analyze Auto-Loaded HANDOFF.md
+## 第 3 步：分析自动加载的 HANDOFF.md
 
-Analyze the auto-loaded `docs/ai-context/HANDOFF.md` to understand:
-- **Existing sections** and their current status
-- **Related ongoing work** that might connect to your session
-- **Structure and formatting** patterns to maintain consistency
-- **Unrelated content** that should be preserved
+分析自动加载的 `docs/ai-context/HANDOFF.md` 以了解：
+- **现有章节**及其当前状态
+- **相关进行中的工作**可能与您会话连接的内容
+- **结构和格式**模式以保持一致性
+- **不相关的内容**应该保留的内容
 
-## Step 4: Determine Update Strategy
+## 第 4 步：确定更新策略
 
-Think about how to best update the handoff based on this session's work. Based on your session analysis and the auto-loaded existing handoff content, decide:
+思考如何基于此会话的工作最好地更新交接。基于您的会话分析和自动加载的现有交接内容，决定：
 
-**If Current Work Relates to Existing Task:**
-- Update the existing section with new progress
-- Add accomplishments to "What Was Accomplished"
-- Update "Current Status" and "Current Issue" if resolved
-- Modify "Next Steps" based on new state
+**如果当前工作与现有任务相关：**
+- 使用新进度更新现有章节
+- 将成就添加到"完成的内容"
+- 如果已解决则更新"当前状态"和"当前问题"
+- 基于新状态修改"下一步"
 
-**If Current Work is New/Unrelated:**
-- Create a new section with descriptive title
-- Include timestamp for session identification
-- Follow existing document structure and formatting
+**如果当前工作是新的/不相关的：**
+- 创建具有描述性标题的新章节
+- 包含会话识别的时间戳
+- 遵循现有文档结构和格式
 
-**If Work Completed an Existing Task:**
-- Mark the task as completed
-- Summarize final outcome
-- Consider archiving or removing if fully resolved
+**如果工作完成了现有任务：**
+- 将任务标记为已完成
+- 总结最终结果
+- 考虑如果完全解决则归档或删除
 
-## Step 5: Update HANDOFF.md Intelligently
+## 第 5 步：智能更新 HANDOFF.md
 
-Make targeted updates to the auto-loaded HANDOFF.md:
+对自动加载的 HANDOFF.md 进行目标更新：
 
-### For New Sections, Include:
+### 对于新章节，包括：
 ```markdown
-## [Task Title] - [Status]
+## [任务标题] - [状态]
 
-### Current Status
-[Brief description of current state]
+### 当前状态
+[当前状态的简要描述]
 
-### What Was Accomplished
-[Bulleted list of concrete achievements with file paths]
+### 完成的内容
+[具有文件路径的具体成就项目列表]
 
-### Current Issue (if applicable)
-[Any blockers or unresolved problems]
+### 当前问题（如适用）
+[任何阻塞或未解决的问题]
 
-### Next Steps to [Objective]
-[Actionable items for continuation]
+### 下一步到 [目标]
+[继续的可操作项目]
 
-### Key Files to Review
-[List of relevant files organized by category]
+### 要审查的关键文件
+[按类别组织的相关文件列表]
 
-### Context for Next Session
-[Important notes for continuity]
+### 下次会话的上下文
+[连续性的重要说明]
 ```
 
-### For Updates to Existing Sections:
-- **Add to accomplishments** without duplicating existing content
-- **Update status** if progress changed the situation
-- **Modify current issues** if problems were resolved or new ones discovered
-- **Refresh next steps** based on new progress
+### 对于现有章节的更新：
+- **添加到成就**而不重复现有内容
+- **如果进度改变了情况则更新状态**
+- **如果问题已解决或发现新问题则修改当前问题**
+- **基于新进度刷新下一步**
 
-## Step 6: Maintain Document Quality
+## 第 6 步：维护文档质量
 
-Ensure your updates follow these guidelines:
+确保您的更新遵循这些指南：
 
-**Content Quality:**
-- **Specific**: Include exact file paths and technical details
-- **Actionable**: Provide clear next steps for continuation
-- **Contextual**: Explain the reasoning behind decisions
-- **Current**: Reflect the actual state after your session
+**内容质量：**
+- **具体**：包含确切的文件路径和技术细节
+- **可操作**：为继续提供清晰的下一步
+- **上下文化**：解释决策背后的理由
+- **当前**：反映会话后的实际状态
 
-**Formatting Consistency:**
-- Follow existing markdown structure and patterns
-- Use consistent heading levels and formatting
-- Maintain bullet point styles and organization
-- Preserve the document's overall structure
+**格式一致性：**
+- 遵循现有的 markdown 结构和模式
+- 使用一致的标题级别和格式
+- 维护项目符号样式和组织
+- 保留文档的整体结构
 
-**Information Management:**
-- **Don't duplicate** existing information unless updating it
-- **Preserve unrelated** sections that weren't part of your work
-- **Consolidate** related information rather than fragmenting it
-- **Archive completed** work appropriately
+**信息管理：**
+- **不要重复**现有信息，除非更新它
+- **保留不相关**的未被您工作影响的章节
+- **整合**相关信息而不是分散它
+- **适当归档**已完成的工作
 
-## Step 7: Final Verification
+## 第 7 步：最终验证
 
-Before completing, verify that your handoff:
-- **Accurately reflects** what was accomplished in the session
-- **Combines** auto-detected technical changes with user-provided context
-- **Provides clear direction** for the next AI session
-- **Maintains continuity** with existing handoff content
-- **Is immediately actionable** for someone picking up the work
+在完成之前，验证您的交接：
+- **准确反映**会话中完成的内容
+- **结合**自动检测的技术更改和用户提供的上下文
+- **为下一个 AI 会话提供清晰方向**
+- **与现有交接内容保持连续性**
+- **对于接手工作的人立即可操作**
 
-## Quality Standards
+## 质量标准
 
-**Be Comprehensive But Concise:**
-- Include all relevant technical details
-- Focus on actionable information
-- Avoid redundancy with existing content
+**全面但简洁：**
+- 包括所有相关技术细节
+- 专注于可操作信息
+- 避免与现有内容冗余
 
-**Maintain Professional Handoff Quality:**
-- Clear problem statements and current status
-- Specific file references and technical context
-- Logical next steps that build on current progress
-- Helpful context that speeds up the next session
+**维护专业交接质量：**
+- 清晰的问题陈述和当前状态
+- 特定文件引用和技术上下文
+- 基于当前进展的逻辑下一步
+- 加速下次会话的有用上下文
 
-This intelligent handoff approach ensures smooth continuity between AI sessions while capturing both the technical reality of what was accomplished and the user's perspective on the work.
+这种智能交接方法确保 AI 会话之间的顺畅连续性，同时捕获完成内容的技术现实和用户对工作的视角。
 
-Now analyze your session, combine it with the user context "$ARGUMENTS", and update the handoff document accordingly.
+现在分析您的会话，将其与用户上下文 "$ARGUMENTS" 结合，并相应地更新交接文档。

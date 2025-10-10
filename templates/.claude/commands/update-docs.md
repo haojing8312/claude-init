@@ -1,314 +1,314 @@
-You have just completed work on the current project. Analyze changes based on the provided context and automatically update relevant documentation.
+您刚刚完成了当前项目的工作。基于提供的上下文分析更改并自动更新相关文档。
 
-## Auto-Loaded Project Context:
+## 自动加载的项目上下文：
 @/CLAUDE.md
 @/docs/ai-context/project-structure.md
 @/docs/ai-context/docs-overview.md
 
-## Core Documentation Principle: Document Current State Only
+## 核心文档原则：仅记录当前状态
 
-**CRITICAL: Always document the current "is" state of the system. Never reference legacy implementations, describe improvements made, or explain what changed. Documentation should read as if the current implementation has always existed.**
+**关键：始终记录系统的当前"是"状态。永远不要引用遗留实施、描述改进内容或解释更改内容。文档应该读起来好像当前实施一直存在。**
 
-### Documentation Anti-Patterns to Avoid:
-- ❌ "Refactored the voice pipeline to use streaming instead of batch processing"
-- ❌ "Improved performance by implementing caching"
-- ❌ "Previously used X, now uses Y for better results"
-- ❌ "Legacy implementation has been replaced with..."
+### 要避免的文档反模式：
+- ❌ "将语音管道重构为使用流式处理而不是批处理"
+- ❌ "通过实现缓存改进了性能"
+- ❌ "以前使用 X，现在使用 Y 以获得更好的结果"
+- ❌ "遗留实施已被替换为..."
 
-### Documentation Best Practices:
-- ✅ "The voice pipeline uses streaming for real-time processing"
-- ✅ "Implements caching for frequently accessed data"
-- ✅ "Uses Y for optimal results"
-- ✅ "The system architecture follows..."
+### 文档最佳实践：
+- ✅ "语音管道使用流式处理进行实时处理"
+- ✅ "为频繁访问的数据实现缓存"
+- ✅ "使用 Y 以获得最佳结果"
+- ✅ "系统架构遵循..."
 
-## Step 1: Analyze Changes Based on Input
+## 第 1 步：基于输入分析更改
 
-### Determine Analysis Mode:
-- **No input (default)**: Analyze recent conversation context
-- **Git commit ID** (e.g., "3b8d24e" or full hash): Analyze specific commit
-- **"uncommitted"/"staged"/"working"**: Analyze uncommitted changes
-- **"last N commits"** (e.g., "last 3 commits"): Analyze recent commits
+### 确定分析模式：
+- **无输入（默认）**：分析最近的会话上下文
+- **Git 提交 ID**（例如，"3b8d24e" 或完整哈希）：分析特定提交
+- **"uncommitted"/"staged"/"working"**：分析未提交的更改
+- **"last N commits"**（例如，"last 3 commits"）：分析最近的提交
 
-### Execute Analysis:
-Based on the input parameter:
+### 执行分析：
+基于输入参数：
 
-#### For Git Commit Analysis:
+#### 对于 Git 提交分析：
 ```bash
-# Get commit details
+# 获取提交详细信息
 git show --name-status [COMMIT_ID]
 git diff [COMMIT_ID]^ [COMMIT_ID]
 ```
 
-#### For Uncommitted Changes:
+#### 对于未提交的更改：
 ```bash
-# Get staged and unstaged changes
+# 获取暂存和未暂存的更改
 git status --porcelain
 git diff HEAD
 git diff --cached
 ```
 
-#### For Recent Commits:
+#### 对于最近的提交：
 ```bash
-# Get recent commit history
+# 获取最近的提交历史
 git log --oneline -n [N]
 git diff HEAD~[N] HEAD
 ```
 
-#### For Session Context (default):
-Review your recent conversation and tool usage for significant changes.
+#### 对于会话上下文（默认）：
+审查您的最近对话和工具使用以查看重要更改。
 
-**Look for Evidence of Documentation-Relevant Changes:**
-- **New features or components** (functionality that needs documenting)
-- **Architecture decisions** (new patterns, structural changes, design decisions)
-- **Technology stack changes** (new dependencies, framework additions, integration changes)
-- **API changes** (new endpoints, modified interfaces, breaking changes)
-- **Configuration changes** (new environment variables, settings, deployment requirements)
-- **File structure changes** (new directories, moved components, reorganized code)
+**寻找文档相关更改的证据：**
+- **新功能或组件**（需要文档记录的功能）
+- **架构决策**（新模式、结构更改、设计决策）
+- **技术栈更改**（新依赖、框架添加、集成更改）
+- **API 更改**（新端点、修改的接口、破坏性更改）
+- **配置更改**（新环境变量、设置、部署要求）
+- **文件结构更改**（新目录、移动的组件、重组的代码）
 
-**Exclude from Documentation Updates:**
-- Performance optimizations without architectural impact
-- Bug fixes that don't change interfaces or patterns
-- Code cleanup, refactoring that doesn't affect usage
-- Logging improvements, debugging enhancements
-- Test additions without new functionality
+**从文档更新中排除：**
+- 没有架构影响的性能优化
+- 不改变接口或模式的错误修复
+- 代码清理、不影响使用的重构
+- 日志改进、调试增强
+- 没有新功能的测试添加
 
-**Generate a brief summary** of what was accomplished:
+**生成完成的简要摘要**：
 ```
-Analysis source: [session context/commit ID/uncommitted changes]
-Detected changes: [1-2 sentence summary of main work done]
-```
-
-## Step 2: Understand Project Context and Documentation Structure
-
-Analyze the auto-loaded foundational files:
-1. `/CLAUDE.md` - **CRITICAL:** Understand AI instructions, coding standards, and development protocols that govern the project
-2. `/docs/ai-context/project-structure.md` - **FOUNDATION:** Technology stack, complete file tree and architecture overview
-3. `/docs/ai-context/docs-overview.md` - Understand:
-   - What documentation files exist and their purposes
-   - How the documentation is organized
-   - Which types of changes map to which documentation
-
-**AI-First Documentation Principle**: Remember that documentation is primarily for AI consumption - optimize for file path references, clear structure markers, and machine-readable patterns that enable efficient context loading.
-
-## Step 3: Intelligent Update Strategy Decision
-
-Think deeply about the documentation updates needed based on the auto-loaded project context and detected changes. Based on the detected changes from Step 1 AND the auto-loaded project context, intelligently decide the optimal approach:
-
-### Strategy Options:
-
-**Direct Update** (0-1 sub-agents):
-- Simple file modifications with clear documentation mapping
-- Bug fixes or minor enhancements that don't affect architecture
-- Changes confined to a single component or feature area
-- Standard patterns already well-documented in the project
-
-**Focused Analysis** (2-3 sub-agents):
-- Moderate complexity changes affecting multiple files
-- New features that introduce novel patterns
-- Changes that span 2-3 components or documentation tiers
-- Technology stack updates requiring validation across docs
-
-**Comprehensive Analysis** (3+ sub-agents):
-- Complex architectural changes affecting multiple system areas
-- Major refactoring that restructures component relationships
-- New integrations that create cross-system dependencies
-- Changes that require extensive documentation cascade updates
-
-## Step 4: Execute Chosen Strategy
-
-### For Direct Update:
-Proceed with straightforward documentation updates using the detected changes and auto-loaded foundational context. Continue with Step 5 (Final Decision Making).
-
-### For Sub-Agent Approaches:
-You have complete autonomy to design sub-agents based on the specific changes detected. Consider these investigation areas and design custom agents to cover what's most relevant:
-
-**Core Investigation Areas to Consider:**
-- **Change Impact Analysis**: Map file modifications to affected documentation across all tiers
-- **Architecture Validation**: Verify existing architectural docs still reflect current implementation
-- **Cross-Component Dependency Mapping**: Identify documentation updates needed due to integration changes
-- **Documentation Accuracy Assessment**: Validate current docs against modified code patterns
-- **Tier Cascade Requirements**: Determine which documentation levels need updates based on change scope
-- **Technology Stack Verification**: Ensure tech stack changes are reflected across relevant documentation
-
-**Autonomous Sub-Agent Design Principles:**
-- **Custom Specialization**: Define agents based on the specific change complexity and documentation impact
-- **Flexible Agent Count**: Use as many agents as needed - scale based on actual change scope
-- **Adaptive Coverage**: Ensure all affected documentation areas are covered without unnecessary overlap
-- **Update-Focused Analysis**: Prioritize investigation that directly supports accurate documentation updates
-
-**Sub-Agent Task Template:**
-```
-Task: "Analyze [SPECIFIC_INVESTIGATION_AREA] for documentation updates based on changes from [SOURCE]: [DETECTED_CHANGES]"
-
-Standard Investigation Workflow:
-1. Review auto-loaded project context (CLAUDE.md, project-structure.md, docs-overview.md)
-2. [CUSTOM_ANALYSIS_STEPS] - Investigate the specific area thoroughly
-3. Return actionable findings that identify required documentation updates
-
-Return comprehensive findings addressing this investigation area for documentation updates.
+分析来源：[会话上下文/提交 ID/未提交更改]
+检测到的更改：[所做主要工作的 1-2 句摘要]
 ```
 
-**CRITICAL: When using sub-agents, always launch them in parallel using a single message with multiple Task tool invocations.**
+## 第 2 步：理解项目上下文和文档结构
 
-## Step 5: Synthesize Analysis and Plan Updates
+分析自动加载的基础文件：
+1. `/CLAUDE.md` - **关键：**理解 AI 指令、编码标准和指导项目的开发协议
+2. `/docs/ai-context/project-structure.md` - **基础：**技术栈、完整文件树和架构概览
+3. `/docs/ai-context/docs-overview.md` - 理解：
+   - 存在哪些文档文件及其目的
+   - 文档如何组织
+   - 哪些类型的更改映射到哪些文档
 
-### For Sub-Agent Approaches:
-Think deeply about integrating findings from all sub-agent investigations for optimal documentation updates. Combine findings from all agents to create optimal documentation update strategy:
+**AI 优先文档原则**：记住文档主要为 AI 消费 - 优化文件路径引用、清晰结构标记和能够实现高效上下文加载的机器可读模式。
 
-**Integration Analysis:**
-- **Change Impact**: Use Change Impact Agent's mapping of modifications to documentation
-- **Architecture Validation**: Apply Architecture Validation Agent's findings on outdated information
-- **Dependency Updates**: Implement Cross-Component Agent's integration change requirements
-- **Accuracy Corrections**: Address Documentation Accuracy Agent's identified inconsistencies
-- **Cascade Planning**: Execute Tier Cascade Agent's multi-level update requirements
+## 第 3 步：智能更新策略决策
 
-**Update Strategy Decision:**
-Based on synthesized analysis, determine:
-- **Documentation scope**: Which files need updates and at what detail level
-- **Update priority**: Critical architectural changes vs. minor pattern updates
-- **Cascade requirements**: Which tier levels need coordinated updates
-- **New file creation**: Whether new documentation files are warranted
+深入思考基于自动加载项目上下文和检测到的更改所需的文档更新。基于第 1 步检测到的更改和自动加载的项目上下文，智能决定最佳方法：
 
-## Step 6: Final Decision Making
+### 策略选项：
 
-Based on your context analysis and the auto-loaded documentation structure (either direct or synthesized from sub-agents), decide:
-- **Which documents need updates** (match changes to appropriate documentation)
-- **What type of updates** (component changes, architecture decisions, new patterns, etc.)
-- **Update scope** (major changes get more detail, minor changes get brief updates)
-- **Whether new documentation files are needed** (see Smart File Creation guidelines below)
+**直接更新**（0-1 个子代理）：
+- 具有清晰文档映射的简单文件修改
+- 不影响架构的错误修复或次要增强
+- 限于单个组件或功能区域的更改
+- 项目中已经记录良好的标准模式
 
-## Step 7: Smart File Creation (If Needed)
+**重点分析**（2-3 个子代理）：
+- 影响多个文件的中等复杂度更改
+- 引入新颖模式的新功能
+- 跨越 2-3 个组件或文档层级的更改
+- 需要跨文档验证的技术栈更新
 
-Before updating existing documentation, assess if new documentation files should be created based on the 3-tier system:
+**全面分析**（3+ 个子代理）：
+- 影响多个系统区域的复杂架构更改
+- 重构组件关系的主要重构
+- 创建跨系统依赖的新集成
+- 需要广泛文档级联更新的更改
 
-### Guidelines for Creating New Documentation Files
+## 第 4 步：执行选择的策略
 
-**Create new Component CONTEXT.md when:**
-- You detect an entirely new top-level component (new directory under `agents/`, `unity-client/`, `supabase-functions/`, etc.)
-- The component has significant functionality (5+ meaningful files)
-- Example: Adding `agents/lesson-generator/` → Create `agents/lesson-generator/CONTEXT.md`
+### 对于直接更新：
+使用检测到的更改和自动加载的基础上下文进行直接的文档更新。继续第 5 步（最终决策）。
 
-**Create new Feature-Specific CONTEXT.md when:**
-- You detect a new complex subsystem within an existing component
-- The subsystem has 3+ files and represents a distinct functional area
-- No existing granular CONTEXT.md file covers this area
-- Example: Adding `agents/tutor-server/src/features/translation/` with multiple files → Create `agents/tutor-server/src/features/CONTEXT.md`
+### 对于子代理方法：
+您完全有自由基于检测到的特定更改设计子代理。考虑这些调查领域并设计自定义代理以覆盖最相关的内容：
 
-**When NOT to create new files:**
-- Small additions (1-2 files) that fit existing documentation scope
-- Bug fixes or minor modifications
-- Temporary or experimental code
+**核心调查领域：**
+- **更改影响分析**：将文件修改映射到所有层级的相关文档
+- **架构验证**：验证现有架构文档是否仍反映当前实施
+- **跨组件依赖映射**：识别由于集成更改需要的文档更新
+- **文档准确性评估**：验证当前文档与修改的代码模式
+- **层叠要求**：确定基于更改范围哪些文档层级需要更新
+- **技术栈验证**：确保技术栈更改反映在相关文档中
 
-**File Creation Process:**
-1. **Create the new CONTEXT.md file** with placeholder content following the pattern of existing granular docs
-2. **Update `/docs/ai-context/docs-overview.md`** to include the new file in the appropriate tier
-3. **Document the addition** in the current update process
+**自主子代理设计原则：**
+- **自定义专业化**：基于特定更改复杂性和文档影响定义代理
+- **灵活代理数量**：根据需要使用尽可能多的代理 - 基于实际更改范围扩展
+- **自适应覆盖**：确保所有受影响的文档区域得到覆盖而没有不必要的重叠
+- **更新重点分析**：优先调查直接支持准确文档更新的内容
 
-### File Content Template for New Granular CONTEXT.md:
+**子代理任务模板**：
+```
+任务："基于来自 [SOURCE] 的更改：[DETECTED_CHANGES] 分析 [SPECIFIC_INVESTIGATION_AREA] 的文档更新"
+
+标准调查工作流：
+1. 审查自动加载的项目上下文（CLAUDE.md、project-structure.md、docs-overview.md）
+2. [CUSTOM_ANALYSIS_STEPS] - 彻底调查特定领域
+3. 返回识别所需文档更新的可操作发现
+
+返回针对此调查领域的综合发现以进行文档更新。
+```
+
+**关键：使用子代理时，始终在包含多个 Task 工具调用的单个消息中并行启动它们。**
+
+## 第 5 步：综合分析和计划更新
+
+### 对于子代理方法：
+深入思考如何整合所有子代理调查的发现以进行最佳文档更新。结合所有代理的发现以创建最佳文档更新策略：
+
+**整合分析：**
+- **更改影响**：使用更改影响代理的修改到文档映射
+- **架构验证**：应用架构验证代理关于过时信息的发现
+- **依赖更新**：实施跨组件代理的集成更改要求
+- **准确性纠正**：解决文档准确性代理识别的不一致
+- **层叠规划**：执行层叠代理的多层级更新要求
+
+**更新策略决策：**
+基于综合分析，确定：
+- **文档范围**：哪些文件需要更新和在什么详细级别
+- **更新优先级**：关键架构更改 vs 次要模式更新
+- **层叠要求**：哪些层级需要协调更新
+- **新文件创建**：是否需要新的文档文件
+
+## 第 6 步：最终决策
+
+基于您的上下文分析和自动加载的文档结构（直接或从子代理综合），决定：
+- **哪些文档需要更新**（将更改匹配到适当的文档）
+- **什么类型的更新**（组件更改、架构决策、新模式等）
+- **更新范围**（主要更改获得更多细节，次要更改获得简要更新）
+- **是否需要新文档文件**（见下面的智能文件创建指南）
+
+## 第 7 步：智能文件创建（如需要）
+
+在更新现有文档之前，基于 3 层级系统评估是否应该创建新文档文件：
+
+### 创建新文档文件的指南
+
+**何时创建新的组件 CONTEXT.md：**
+- 您检测到全新的顶级组件（`agents/`、`unity-client/`、`supabase-functions/` 等下的新目录）
+- 组件具有重要功能（5+ 个有意义的文件）
+- 示例：添加 `agents/lesson-generator/` → 创建 `agents/lesson-generator/CONTEXT.md`
+
+**何时创建新的功能特定 CONTEXT.md：**
+- 您检测到现有组件中的新复杂子系统
+- 子系统具有 3+ 个文件并代表不同的功能区域
+- 没有现有的细粒度 CONTEXT.md 文件覆盖此区域
+- 示例：添加具有多个文件的 `agents/tutor-server/src/features/translation/` → 创建 `agents/tutor-server/src/features/CONTEXT.md`
+
+**何时不创建新文件：**
+- 适合现有文档范围的小添加（1-2 个文件）
+- 错误修复或次要修改
+- 临时或实验性代码
+
+**文件创建过程：**
+1. **使用占位符内容创建新的 CONTEXT.md 文件**，遵循现有细粒度文档的模式
+2. **更新 `/docs/ai-context/docs-overview.md`** 以在适当层级包含新文件
+3. **在当前更新过程中记录添加**
+
+### 新细粒度 CONTEXT.md 的文件内容模板：
 ```markdown
-# [Feature Area] Documentation
+# [功能区域] 文档
 
-*This file documents [specific area] patterns and implementations within [component].*
+*此文件记录 [组件] 中 [特定区域] 的模式和实施。*
 
-## [Area] Architecture
-- [Key architectural elements]
+## [区域] 架构
+- [关键架构元素]
 
-## Implementation Patterns
-- [Key patterns used]
+## 实施模式
+- [使用的关键模式]
 
-## Integration Points
-- [How this integrates with other parts]
+## 集成点
+- [这如何与其他部分集成]
 
 ---
 
-*This file was created as part of the 3-tier documentation system to document [brief reason].*
+*此文件作为 3 层级文档系统的一部分创建，用于记录 [简要原因]。*
 ```
 
-## Step 8: Tier-First Documentation Updates
+## 第 8 步：层级优先文档更新
 
-**CRITICAL: Always start with Tier 3 (feature-specific) documentation and work upward through the tiers. Never skip tiers.**
+**关键：始终从第 3 层（功能特定）文档开始，向上通过各层工作。永远不要跳过层级。**
 
-### Tier 3 (Feature-Specific) - START HERE
-**Always begin with the most granular documentation closest to your changes:**
-- **Identify affected Tier 3 files** (feature-specific CONTEXT.md files in subdirectories)
-- **Update these granular files first** with specific implementation details, patterns, and integration points
-- **Examples**: `agents/tutor-server/src/core/pipelines/CONTEXT.md`, `web-dashboard/src/lib/api/CONTEXT.md`, `agents/tutor-server/src/features/*/CONTEXT.md`
-- **Update guidelines**: Be specific about file names, technologies, implementation patterns
+### 第 3 层（功能特定）- 从这里开始
+**始终从最接近您更改的最细粒度文档开始：**
+- **识别受影响的第 3 层文件**（子目录中的功能特定 CONTEXT.md 文件）
+- **首先更新这些细粒度文件**，包含具体的实施细节、模式和集成点
+- **示例**：`agents/tutor-server/src/core/pipelines/CONTEXT.md`、`web-dashboard/src/lib/api/CONTEXT.md`、`agents/tutor-server/src/features/*/CONTEXT.md`
+- **更新指南**：具体说明文件名、技术、实施模式
 
-### Tier 2 (Component-Level) - CASCADE UP
-**After completing Tier 3 updates, evaluate if component-level changes are needed:**
-- **Check parent component CONTEXT.md files** (e.g., `agents/tutor-server/CONTEXT.md` for changes in `agents/tutor-server/src/*/`)
-- **Update if changes represent significant architectural shifts** affecting the overall component
-- **Focus on**: How granular changes affect component architecture, new integration patterns, major feature additions
-- **Examples**: `agents/tutor-server/CONTEXT.md`, `web-dashboard/CONTEXT.md`, `unity-client/CONTEXT.md`
+### 第 2 层（组件级）- 向上层叠
+**完成第 3 层更新后，评估是否需要组件级更改：**
+- **检查父组件 CONTEXT.md 文件**（例如，对于 `agents/tutor-server/src/*/` 中的更改，检查 `agents/tutor-server/CONTEXT.md`）
+- **如果更改代表影响整体组件的重要架构转移**则更新
+- **专注于**：细粒度更改如何影响组件架构、新集成模式、主要功能添加
+- **示例**：`agents/tutor-server/CONTEXT.md`、`web-dashboard/CONTEXT.md`、`unity-client/CONTEXT.md`
 
-### Tier 1 (Foundational) - CASCADE UP
-**Finally, check if foundational documentation needs updates for system-wide impacts:**
+### 第 1 层（基础）- 向上层叠
+**最后，检查是否基础文档需要系统范围影响的更新：**
 
-#### Project Structure Updates (`/docs/ai-context/project-structure.md`)
-Update for any of these changes:
-- **File tree changes**: Created, moved, deleted files/directories; renamed components; restructured organization
-- **Technology stack updates**: New dependencies (check pyproject.toml, package.json), major version updates, new frameworks, AI service changes, development tool modifications
+#### 项目结构更新（`/docs/ai-context/project-structure.md`）
+为这些更改中的任何一个更新：
+- **文件树更改**：创建、移动、删除文件/目录；重命名组件；重组组织
+- **技术栈更新**：新依赖（检查 pyproject.toml、package.json）、主要版本更新、新框架、AI 服务更改、开发工具修改
 
-#### Other Foundational Documentation
-Update other `/docs/ai-context/` files if changes affect:
-- **System-wide architectural patterns**
-- **Cross-component integration approaches**
-- **Development workflow or standards**
+#### 其他基础文档
+如果更改影响，更新其他 `/docs/ai-context/` 文件：
+- **系统级架构模式**
+- **跨组件集成方法**
+- **开发工作流或标准**
 
-### Cascade Decision Logic
-**What Constitutes "Significant Updates" Requiring Cascade:**
-- **New major feature areas** (not just bug fixes or minor enhancements)
-- **Architectural pattern changes** that affect how components integrate with others
-- **New technologies or frameworks** introduced to a component
-- **Major refactoring** that changes component structure or responsibilities
-- **New integration points** between components or external systems
+### 层叠决策逻辑
+**什么构成需要层叠的"重要更新"：**
+- **新的主要功能区域**（不仅仅是错误修复或次要增强）
+- **影响组件如何与其他组件集成的架构模式更改**
+- **引入到组件的新技术或框架**
+- **改变组件结构或职责的主要重构**
+- **组件之间或与外部系统的新集成点**
 
-### Update Quality Guidelines (All Tiers)
-- **Be concise** (max 3 sentences unless major architectural change)
-- **Be specific** (include file names, technologies, key benefits)
-- **Follow existing patterns** in each document
-- **Avoid redundancy** (don't repeat what's already documented)
-- **Co-locate knowledge** (keep documentation near relevant code)
+### 所有层级的更新质量指南
+- **简洁**（除非主要架构更改，最多 3 句）
+- **具体**（包含文件名、技术、关键好处）
+- **在每个文档中遵循现有模式**
+- **避免冗余**（不要重复已记录的内容）
+- **共同定位知识**（将文档保持在相关代码附近）
 
-## Step 9: Update Documentation Overview
+## 第 9 步：更新文档概览
 
-**IMPORTANT:** After updating any documentation files in steps 1-8, check if the documentation overview needs updates:
-- Reference the auto-loaded `/docs/ai-context/docs-overview.md`
-- If you added new documentation files (especially new CONTEXT.md files), update the overview to include them in the appropriate tier
-- If you significantly changed the structure/purpose of existing documentation, update the overview to reflect these changes
-- Keep the overview accurate and current so it serves as a reliable guide to the documentation architecture
+**重要：**在第 1-8 步中更新任何文档文件后，检查文档概览是否需要更新：
+- 引用自动加载的 `/docs/ai-context/docs-overview.md`
+- 如果您添加了新的文档文件（特别是新的 CONTEXT.md 文件），更新概览以在适当层级包含它们
+- 如果您显著更改了现有文档的结构/目的，更新概览以反映这些更改
+- 保持概览准确和当前，以便作为文档架构的可靠指南
 
-### Special Note for New CONTEXT.md Files:
-When you create new granular CONTEXT.md files, you MUST add them to the appropriate section in docs-overview.md:
-- **Tier 2 (Component-Level)**: For new top-level components
-- **Tier 3 (Feature-Specific)**: For new subsystem documentation within existing components
+### 新 CONTEXT.md 文件的特别说明：
+当您创建新的细粒度 CONTEXT.md 文件时，您必须将它们添加到 docs-overview.md 中适当的部分：
+- **第 2 层（组件级）**：对于新的顶级组件
+- **第 3 层（功能特定）**：对于现有组件中的新子系统文档
 
-## Quality Guidelines
+## 质量指南
 
-- **Concise:** Keep updates brief and focused
-- **Specific:** Include file names, technologies, key benefits
-- **Accurate:** Based on actual changes made, not assumptions
-- **Helpful:** Information that would be useful to another developer
-- **Current:** Ensure file tree reflects actual project structure
-- **Organized:** Follow the 3-tier documentation system principles
+- **简洁**：保持更新简短和专注
+- **具体**：包含文件名、技术、关键好处
+- **准确**：基于实际进行的更改，而不是假设
+- **有用**：对其他开发者有用的信息
+- **当前**：确保文件树反映实际项目结构
+- **有组织**：遵循 3 层级文档系统原则
 
-## When Not to Update or Create Documentation
+## 何时更新或创建文档
 
-Skip documentation updates/creation for:
-- Bug fixes (unless they change architecture)
-- Minor tweaks or cleanup
-- Debugging or temporary changes
-- Code formatting or comments
-- Trivial modifications
-- Single-file additions that fit existing documentation scope
+跳过文档更新/创建：
+- 错误修复（除非它们改变架构）
+- 次要调整或清理
+- 调试或临时更改
+- 代码格式化或注释
+- 微不足道的修改
+- 适合现有文档范围的单文件添加
 
-## 3-Tier System Benefits
+## 3 层级系统的好处
 
-This enhanced approach leverages the 3-tier documentation system to:
-- **Minimize cascade effects**: Most changes update 1-2 granular files
-- **Scale intelligently**: New documentation created only when warranted
-- **Co-locate knowledge**: Documentation lives near relevant code
-- **Maintain consistency**: Clear guidelines for when and how to extend documentation
+这种增强的方法利用 3 层级文档系统来：
+- **最小化层叠效应**：大多数更改更新 1-2 个细粒度文件
+- **智能扩展**：仅在保证时创建新文档
+- **共同定位知识**：文档位于相关代码附近
+- **保持一致性**：何时以及如何扩展文档的清晰指南
 
-Now analyze the specified changes and update the relevant documentation accordingly.
+现在分析指定的更改并相应地更新相关文档。

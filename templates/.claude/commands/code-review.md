@@ -1,322 +1,322 @@
 # /code-review
 
-*Performs focused multi-agent code review that surfaces only critical, high-impact findings for solo developers using AI tools.*
+*执行专注的多代理代码审查，仅 surfaced 对使用 AI 工具的独立开发者具有关键性、高影响力的发现。*
 
-## Core Philosophy
+## 核心理念
 
-This command prioritizes **needle-moving discoveries** over exhaustive lists. Every finding must demonstrate significant impact on:
-- System reliability & stability
-- Security vulnerabilities with real exploitation risk
-- Performance bottlenecks affecting user experience
-- Architectural decisions blocking future scalability
-- Critical technical debt threatening maintainability
+此命令优先考虑**具有变革性的发现**，而非详尽的列表。每个发现必须证明对以下方面具有重大影响：
+- 系统可靠性和稳定性
+- 具有真实利用风险的安全漏洞
+- 影响用户体验的性能瓶颈
+- 阻碍未来可扩展性的架构决策
+- 威胁可维护性的关键技术债务
 
-### 🚨 Critical Findings Only
-Issues that could cause production failures, security breaches, or severe user impact within 48 hours.
+### 🚨 仅限关键发现
+可能在 48 小时内导致生产故障、安全漏洞或严重用户影响的问题。
 
-### 🔥 High-Value Improvements
-Changes that unlock new capabilities, remove significant constraints, or improve metrics by >25%.
+### 🔥 高价值改进
+解锁新功能、移除重要约束或将指标提升 >25% 的变更。
 
-### ❌ Excluded from Reports
-Minor style issues, micro-optimizations (<10%), theoretical best practices, edge cases affecting <1% of users.
+### ❌ 报告中排除
+次要风格问题、微优化（<10%）、理论最佳实践、影响 <1% 用户的边缘情况。
 
 
-## Auto-Loaded Project Context:
+## 自动加载项目上下文：
 @/CLAUDE.md
 @/docs/ai-context/project-structure.md
 @/docs/ai-context/docs-overview.md
 
 
-## Command Execution
+## 命令执行
 
-User provided context: "$ARGUMENTS"
+用户提供的上下文："$ARGUMENTS"
 
-### Step 1: Understand User Intent & Gather Context
+### 第 1 步：理解用户意图并收集上下文
 
-#### Parse the Request
-Analyze the natural language input to determine:
-1. **What to review**: Parse file paths, component names, feature descriptions, or commit references
-2. **Review focus**: Identify any specific concerns mentioned (security, performance, etc.)
-3. **Scope inference**: Intelligently determine the breadth of review needed
+#### 解析请求
+分析自然语言输入以确定：
+1. **审查内容**：解析文件路径、组件名称、功能描述或提交引用
+2. **审查重点**：识别提到的任何特定关注点（安全性、性能等）
+3. **范围推断**：智能确定所需审查的广度
 
-Examples of intent parsing:
-- "the authentication flow" → Find all files related to auth across the codebase
-- "voice pipeline implementation" → Locate voice processing components
-- "recent changes" → Parse git history for relevant commits
-- "the API routes" → Identify all API endpoint files
+意图解析示例：
+- "身份验证流程" → 查找整个代码库中与身份验证相关的所有文件
+- "语音管道实现" → 定位语音处理组件
+- "最近的更改" → 解析相关提交的 git 历史
+- "API 路由" → 识别所有 API 端点文件
 
-#### Read Relevant Documentation
-Before allocating agents, **read the documentation** to understand:
-1. Use `/docs/ai-context/docs-overview.md` to identify relevant docs
-2. Read documentation related to the code being reviewed:
-   - Architecture docs for subsystem understanding
-   - API documentation for integration points
-   - Security guidelines for sensitive areas
-   - Performance considerations for critical paths
-3. Build a mental model of risks, constraints, and priorities
+#### 阅读相关文档
+在分配代理之前，**阅读文档**以了解：
+1. 使用 `/docs/ai-context/docs-overview.md` 识别相关文档
+2. 阅读与被审查代码相关的文档：
+   - 子系统理解的架构文档
+   - 集成点的 API 文档
+   - 敏感区域的安全指南
+   - 关键路径的性能考虑
+3. 建立风险、约束和优先级的心智模型
 
-This context ensures intelligent agent allocation based on actual project knowledge.
+此上下文确保基于实际项目知识进行智能代理分配。
 
-### Step 2: Define Mandatory Coverage Areas
+### 第 2 步：定义强制覆盖区域
 
-Every code review MUST analyze these core areas, with depth determined by scope:
+每个代码审查必须分析这些核心区域，深度由范围决定：
 
-#### 🎯 Mandatory Coverage Areas:
+#### 🎯 强制覆盖区域：
 
-1. **Critical Path Analysis**
-   - User-facing functionality that could break
-   - Data integrity and state management
-   - Error handling and recovery mechanisms
+1. **关键路径分析**
+   - 可能损坏的用户面向功能
+   - 数据完整性和状态管理
+   - 错误处理和恢复机制
 
-2. **Security Surface**
-   - Input validation and sanitization
-   - Authentication/authorization flows
-   - Data exposure and API security
+2. **安全表面**
+   - 输入验证和清理
+   - 身份验证/授权流程
+   - 数据暴露和 API 安全
 
-3. **Performance Impact**
-   - Real-time processing bottlenecks
-   - Resource consumption (memory, CPU)
-   - Scalability constraints
+3. **性能影响**
+   - 实时处理瓶颈
+   - 资源消耗（内存、CPU）
+   - 可扩展性约束
 
-4. **Integration Points**
-   - API contracts and boundaries
-   - Service dependencies
-   - External system interactions
+4. **集成点**
+   - API 契约和边界
+   - 服务依赖
+   - 外部系统交互
 
-#### 📊 Dynamic Agent Allocation:
+#### 📊 动态代理分配：
 
-Based on review scope, allocate agents proportionally:
+根据审查范围，按比例分配代理：
 
-**Small to medium Scope (small set of files or small feature)**
-- 2-3 agents covering mandatory areas
-- Each agent handles 1-2 coverage areas
-- Focus on highest-risk aspects
+**小到中等范围（小文件集或小功能）**
+- 2-3 个代理覆盖强制区域
+- 每个代理处理 1-2 个覆盖区域
+- 专注于最高风险方面
 
-**Large Scope (many files, major feature or subsystem)**
-- 4-6 agents with specialized focus
-- Each mandatory area gets dedicated coverage
-- Additional agents for cross-cutting concerns
+**大范围（多文件、主要功能或子系统）**
+- 4-6 个具有专业化重点的代理
+- 每个强制区域获得专门覆盖
+- 跨域关注点的额外代理
 
-### Step 3: Dynamic Agent Generation
+### 第 3 步：动态代理生成
 
-Based on scope analysis and mandatory coverage areas, dynamically create specialized agents:
+基于范围分析和强制覆盖区域，动态创建专业化代理：
 
-#### Agent Generation Strategy:
+#### 代理生成策略：
 
-**With your documentation knowledge from Step 1, think deeply** about optimal agent allocation:
-- Leverage your understanding of the project architecture and risks
-- Consider the specific documentation you read about this subsystem
-- Apply insights about critical paths and security considerations
-- Use documented boundaries and integration points to partition work
-- Factor in any performance or scalability concerns from the docs
+**利用您在第 1 步中的文档知识，深入思考**最佳代理分配：
+- 利用您对项目架构和风险的理解
+- 考虑您阅读的关于此子系统的特定文档
+- 应用关键路径和安全考虑的洞察
+- 使用文档化的边界和集成点划分工作
+- 考虑文档中的性能或可扩展性关注
 
-Use your understanding of the project to intuitively determine:
-1. **How many agents are needed** - Let the code's complexity and criticality guide you
-2. **How to partition the work** - Follow natural architectural boundaries
-3. **Which specializations matter most** - Focus agents where risk is highest
+使用您对项目的理解直观确定：
+1. **需要多少代理** - 让代码的复杂性和关键性指导您
+2. **如何划分工作** - 遵循自然架构边界
+3. **哪些专业化最重要** - 将代理集中在风险最高的地方
 
-**Generate Specialized Agents**
+**生成专业化代理**
 
-   For each allocated agent, create a focused role:
+   对于每个分配的代理，创建专注的角色：
 
-   **Example for 6-agent allocation:**
-   - Agent 1: Critical_Path_Validator (user flows + error handling)
-   - Agent 2: Security_Scanner (input validation + auth)
-   - Agent 3: API_Security_Auditor (data exposure + boundaries)
-   - Agent 4: Performance_Profiler (bottlenecks + resource usage)
-   - Agent 5: Scalability_Analyst (constraints + growth paths)
-   - Agent 6: Integration_Verifier (dependencies + contracts)
+   **6 个代理分配示例：**
+   - 代理 1：Critical_Path_Validator（用户流程 + 错误处理）
+   - 代理 2：Security_Scanner（输入验证 + 身份验证）
+   - 代理 3：API_Security_Auditor（数据暴露 + 边界）
+   - 代理 4：Performance_Profiler（瓶颈 + 资源使用）
+   - 代理 5：Scalability_Analyst（约束 + 增长路径）
+   - 代理 6：Integration_Verifier（依赖 + 契约）
 
-   **Example for 3-agent allocation:**
-   - Agent 1: Security_Performance_Analyst (security + performance areas)
-   - Agent 2: Critical_Path_Guardian (functionality + integrations)
-   - Agent 3: Risk_Quality_Assessor (technical debt + code quality)
+   **3 个代理分配示例：**
+   - 代理 1：Security_Performance_Analyst（安全 + 性能区域）
+   - 代理 2：Critical_Path_Guardian（功能 + 集成）
+   - 代理 3：Risk_Quality_Assessor（技术债务 + 代码质量）
 
-#### Dynamic Focus Areas:
+#### 动态重点区域：
 
-Each agent receives specialized instructions based on:
-- **File characteristics**: API endpoints → security focus
-- **Code patterns**: Loops/algorithms → performance focus
-- **Dependencies**: External services → integration focus
-- **User touchpoints**: UI/voice → critical path focus
+每个代理根据以下内容接收专业化指令：
+- **文件特征**：API 端点 → 安全重点
+- **代码模式**：循环/算法 → 性能重点
+- **依赖**：外部服务 → 集成重点
+- **用户触点**：UI/语音 → 关键路径重点
 
-### Step 4: Execute Dynamic Multi-Agent Review
+### 第 4 步：执行动态多代理审查
 
-**Before launching agents, pause and think deeply:**
-- What are the real risks in this code?
-- Which areas could cause the most damage if they fail?
-- Where would a solo developer need the most help?
+**在启动代理之前，暂停并深入思考：**
+- 这段代码中的真正风险是什么？
+- 哪些区域如果失败会造成最大损害？
+- 独立开发者在哪些方面最需要帮助？
 
-Generate and launch agents based on your thoughtful analysis:
+基于您的深思熟虑分析生成和启动代理：
 
 ```
-For each dynamically generated agent:
-  Task: "As [Agent_Role], analyze [assigned_coverage_areas] in [target_scope].
+对于每个动态生成的代理：
+  任务："作为 [Agent_Role]，分析 [target_scope] 中的 [assigned_coverage_areas]。
 
-  MANDATORY COVERAGE CHECKLIST:
-  ☐ Critical Path: [assigned aspects]
-  ☐ Security: [assigned aspects]
-  ☐ Performance: [assigned aspects]
-  ☐ Integration: [assigned aspects]
+  强制覆盖检查清单：
+  ☐ 关键路径：[分配的方面]
+  ☐ 安全：[分配的方面]
+  ☐ 性能：[分配的方面]
+  ☐ 集成：[分配的方面]
 
-  HIGH-IMPACT REVIEW MANDATE:
-  Focus ONLY on findings that significantly move the needle for a solo developer.
+  高影响力审查授权：
+  专注于仅对独立开发者具有变革性的发现。
 
-  Review workflow:
-  1. Review auto-loaded project context (CLAUDE.md, project-structure.md, docs-overview.md)
-  2. Analyze your assigned coverage areas with deep focus
-  3. For complex issues, use:
-     - mcp__gemini__consult_gemini for architectural analysis
-     - mcp__context7__get-library-docs for framework best practices
-  4. Cross-reference with other coverage areas for systemic issues
-  5. Document ONLY high-impact findings:
+  审查工作流：
+  1. 审查自动加载的项目上下文（CLAUDE.md、project-structure.md、docs-overview.md）
+  2. 深入专注地分析您分配的覆盖区域
+  3. 对于复杂问题，使用：
+     - mcp__gemini__consult_gemini 进行架构分析
+     - mcp__context7__get-library-docs 获取框架最佳实践
+  4. 与其他覆盖区域交叉引用系统性问题
+  5. 仅记录高影响力发现：
 
-     ## [Coverage_Area] Analysis by [Agent_Role]
+     ## [Coverage_Area] 由 [Agent_Role] 的分析
 
-     ### 🚨 Critical Issues (Production Risk)
-     - Issue: [description]
-     - Location: [file:line_number]
-     - Impact: [quantified - downtime hours, users affected, data at risk]
-     - Fix: [specific code snippet]
-     - Consequence if ignored: [what happens in 48 hours]
+     ### 🚨 关键问题（生产风险）
+     - 问题：[描述]
+     - 位置：[file:line_number]
+     - 影响：[量化 - 停机时间、受影响用户、风险数据]
+     - 修复：[特定代码片段]
+     - 忽略后果：[48 小时内会发生什么]
 
-     ### 🎯 Strategic Improvements (Capability Unlocks)
-     - Limitation: [what's currently blocked]
-     - Solution: [architectural change or implementation]
-     - Unlocks: [new capability or scale]
-     - ROI: [effort hours vs benefit quantified]
+     ### 🎯 战略改进（功能解锁）
+     - 限制：[当前阻塞的内容]
+     - 解决方案：[架构变更或实施]
+     - 解锁：[新功能或规模]
+     - 投资回报：[投入小时数与量化收益]
 
-     ### ⚡ Quick Wins (Optional)
-     - Only include if <2 hours for >20% improvement
-     - Must show measurable impact
+     ### ⚡ 快速获胜（可选）
+     - 仅当 <2 小时实现 >20% 改进时包含
+     - 必须显示可衡量影响
 
-  REMEMBER: Every finding must pass the 'so what?' test for a solo developer."
+  记住：每个发现必须通过独立开发者的'那又怎样？'测试。"
 ```
 
-#### Parallel Execution Strategy:
+#### 并行执行策略：
 
-**Launch all agents simultaneously** for maximum efficiency
+**同时启动所有代理**以获得最大效率
 
 
-### Step 5: Synthesize Findings with Maximum Analysis Power
+### 第 5 步：以最大分析能力综合发现
 
-After all sub-agents complete their analysis:
+所有子代理完成分析后：
 
 **ultrathink**
 
-Activate maximum cognitive capabilities to:
+激活最大认知能力以：
 
-1. **Filter for Impact**
-   - Discard all low-priority findings
-   - Quantify real-world impact of each issue
-   - Focus on production risks and capability unlocks
+1. **过滤影响**
+   - 丢弃所有低优先级发现
+   - 量化每个问题的真实世界影响
+   - 专注于生产风险和功能解锁
 
-2. **Deep Pattern Analysis**
-   - Identify systemic issues vs isolated problems
-   - Find root causes across agent reports
-   - Detect subtle security vulnerabilities
+2. **深度模式分析**
+   - 识别系统性问题与孤立问题
+   - 在代理报告中查找根本原因
+   - 检测微妙的安全漏洞
 
-3. **Strategic Prioritization**
-   - Calculate ROI for each improvement
-   - Consider solo developer constraints
-   - Create actionable fix sequence
+3. **战略优先级排序**
+   - 计算每个改进的投资回报率
+   - 考虑独立开发者约束
+   - 创建可操作的修复序列
    ```markdown
-   # Code Review Summary
+   # 代码审查摘要
 
-   **Reviewed**: [scope description]
-   **Date**: [current date]
-   **Overall Quality Score**: [A-F grade with justification]
+   **已审查**：[范围描述]
+   **日期**：[当前日期]
+   **整体质量得分**：[A-F 等级并附上理由]
 
-   ## Key Metrics
-   - Security Risk Level: [Critical/High/Medium/Low]
-   - Performance Impact: [description]
-   - Technical Debt: [assessment]
-   - Test Coverage: [if applicable]
+   ## 关键指标
+   - 安全风险级别：[Critical/High/Medium/Low]
+   - 性能影响：[描述]
+   - 技术债务：[评估]
+   - 测试覆盖率：[如适用]
    ```
 
-### Step 6: Present Comprehensive Review
+### 第 6 步：呈现全面审查
 
-Structure the final output as:
+构建最终输出为：
 
 ```markdown
-# 🔍 Code Review Report
+# 🔍 代码审查报告
 
-## Executive Summary
-[High-level findings and overall assessment]
+## 执行摘要
+[高级发现和整体评估]
 
-## 🚨 Production Risks (Fix Within 48 Hours)
-[Only issues that could cause downtime, data loss, or security breaches]
+## 🚨 生产风险（48 小时内修复）
+[仅可能导致停机、数据丢失或安全漏洞的问题]
 
-## 🎯 Strategic Improvements (High ROI)
-[Only changes that unlock capabilities or improve metrics >25%]
+## 🎯 战略改进（高投资回报率）
+[仅解锁功能或提升指标 >25% 的变更]
 
-## ⚡ Quick Wins (Optional)
-[Only if <2 hours effort for significant improvement]
+## ⚡ 快速获胜（可选）
+[仅当 <2 小时努力实现显著改进时]
 
-## Detailed Analysis
+## 详细分析
 
-### Security Assessment
-[Detailed security findings from Security_Auditor]
+### 安全评估
+[来自 Security_Auditor 的详细安全发现]
 
-### Performance Analysis
-[Detailed performance findings from Performance_Analyzer]
+### 性能分析
+[来自 Performance_Analyzer 的详细性能发现]
 
-### Architecture Review
-[Detailed architecture findings from Architecture_Validator]
+### 架构审查
+[来自 Architecture_Validator 的详细架构发现]
 
-### Code Quality Evaluation
-[Detailed quality findings from Quality_Inspector]
+### 代码质量评估
+[来自 Quality_Inspector 的详细质量发现]
 
-[Additional sections based on sub-agents used]
+[基于使用子代理的附加部分]
 
-## Action Plan
-1. Critical fixes preventing production failures
-2. High-ROI improvements unlocking capabilities
+## 行动计划
+1. 阻止生产故障的关键修复
+2. 解锁功能的高投资回报率改进
 
-## Impact Matrix
-| Issue | User Impact | Effort | ROI |
+## 影响矩阵
+| 问题 | 用户影响 | 努力 | 投资回报率 |
 |-------|-------------|--------|-----|
-| [Only high-impact issues with quantified metrics] |
+| [仅具有量化指标的高影响力问题] |
 ```
 
-### Step 7: Interactive Follow-up
+### 第 7 步：交互式后续处理
 
-After presenting the review, offer interactive follow-ups. For example:
-- "Would you like me to fix any of the critical issues?"
-- "Should I create a detailed refactoring plan for any component?"
-- "Do you want me to generate tests for uncovered code?"
-- "Should I create GitHub issues for tracking these improvements?"
+呈现审查后，提供交互式后续处理。例如：
+- "您希望我修复任何关键问题吗？"
+- "我应该为任何组件创建详细的重构计划吗？"
+- "您希望我为未覆盖的代码生成测试吗？"
+- "我应该为跟踪这些改进创建 GitHub 问题吗？"
 
-## Implementation Notes
+## 实施说明
 
-1. **Use parallel Task execution** for all sub-agents to minimize review time
-2. **Include file:line_number references** for easy navigation
-3. **Balance criticism with recognition** of good practices
-4. **Provide actionable fixes**, not just problem identification
-5. **Consider project phase** and priorities when recommending changes
-6. **Use MCP servers** for specialized analysis when beneficial
-7. **Keep security findings sensitive** - don't expose vulnerabilities publicly
+1. **为所有子代理使用并行任务执行**以最小化审查时间
+2. **包含 file:line_number 引用**以便于导航
+3. **平衡批评与认可**良好实践
+4. **提供可操作的修复**，而不仅仅是问题识别
+5. **考虑项目阶段**和优先级时推荐变更
+6. **有益时使用 MCP 服务器**进行专业化分析
+7. **保持安全发现敏感** - 不要公开暴露漏洞
 
-## Error Handling
+## 错误处理
 
-### Coverage Verification
+### 覆盖验证
 
-Before presenting results, verify complete coverage:
+在呈现结果之前，验证完整覆盖：
 
 ```
-☑ Critical Path Analysis: [Covered by agents X, Y]
-☑ Security Surface: [Covered by agents Y, Z]
-☑ Performance Impact: [Covered by agents X, Z]
-☑ Integration Points: [Covered by agents W, X]
+☑ 关键路径分析：[由代理 X, Y 覆盖]
+☑ 安全表面：[由代理 Y, Z 覆盖]
+☑ 性能影响：[由代理 X, Z 覆盖]
+☑ 集成点：[由代理 W, X 覆盖]
 ```
 
-If any area lacks coverage, deploy additional focused agents.
+如果任何区域缺乏覆盖，部署额外的专注代理。
 
-## Error Handling
+## 错误处理
 
-If issues occur during review:
-- **Ambiguous input**: Use search tools to find relevant files before asking for clarification
-- **File not found**: Search for similar names or components across the codebase
-- **Large scope detected**: Dynamically scale agents based on calculated complexity
-- **No files found**: Provide helpful suggestions based on project structure
-- **Coverage gaps**: Deploy supplementary agents for missed areas
+审查期间发生问题时：
+- **输入模糊**：在要求澄清之前使用搜索工具查找相关文件
+- **文件未找到**：在整个代码库中搜索相似名称或组件
+- **检测到大范围**：根据计算复杂度动态扩展代理
+- **未找到文件**：基于项目结构提供有用建议
+- **覆盖缺口**：为缺失区域部署补充代理
