@@ -1,309 +1,309 @@
-You are working on the current project. The user has requested to create or regenerate documentation with the arguments: "$ARGUMENTS"
+您正在处理当前项目。用户已请求使用参数 "$ARGUMENTS" 创建或重新生成文档。
 
-## Auto-Loaded Project Context:
+## 自动加载的项目上下文：
 @/CLAUDE.md
 @/docs/ai-context/project-structure.md
 @/docs/ai-context/docs-overview.md
 
-## CRITICAL: AI-Optimized Documentation Principles
-All documentation must be optimized for AI consumption and future-proofing:
-- **Structured & Concise**: Use clear sections, lists, and hierarchies. Provide essential information only.
-- **Contextually Complete**: Include necessary context, decision rationale ("why"), and cross-references.
-- **Pattern-Oriented**: Make architectural patterns, conventions, and data flow explicit.
-- **Modular & Scalable**: Structure for partial updates and project growth.
-- **Cross-references**: Link related concepts with file paths, function names, and stable identifiers
+## 关键原则：AI 优化文档原则
+所有文档必须为 AI 消费和面向未来而优化：
+- **结构化和简洁**：使用清晰的章节、列表和层次结构。仅提供必要信息。
+- **上下文完整**：包含必要的上下文、决策理由（"为什么"）和交叉引用。
+- **模式导向**：使架构模式、约定和数据流明确。
+- **模块化和可扩展**：为部分更新和项目增长而构建结构。
+- **交叉引用**：使用文件路径、函数名称和稳定标识符链接相关概念
 
 
 ---
 
-## Step 1: Analyze & Strategize
+## 第 1 步：分析和制定策略
 
-Using the auto-loaded project context, analyze the user's request and determine the optimal documentation strategy.
+使用自动加载的项目上下文，分析用户请求并确定最优文档策略。
 
-### 1.1. Parse Target & Assess Complexity
-**Action**: Analyze `$ARGUMENTS` to identify the `target_path` and its documentation tier.
+### 1.1. 解析目标并评估复杂度
+**操作**：分析 `$ARGUMENTS` 以识别 `target_path` 及其文档层级。
 
-**Target Classification:**
-- **Tier 3 (Feature-Specific)**: Paths containing `/src/` and ending in `/CONTEXT.md`
-- **Tier 2 (Component-Level)**: Paths ending in component root `/CONTEXT.md`
+**目标分类**：
+- **第 3 层（功能特定）**：包含 `/src/` 且以 `/CONTEXT.md` 结尾的路径
+- **第 2 层（组件级）**：以组件根目录 `/CONTEXT.md` 结尾的路径
 
-**Complexity Assessment Criteria:**
-- **Codebase Size**: File count and lines of code in target directory
-- **Technology Mix**: Diversity of languages and frameworks (Python, TypeScript, etc.)
-- **Architectural Complexity**: Dependency graph and cross-component imports
-- **Existing Documentation**: Presence and state of any CLAUDE.md files in the area
+**复杂度评估标准**：
+- **代码库大小**：目标目录中的文件数量和代码行数
+- **技术组合**：语言和框架的多样性（Python、TypeScript 等）
+- **架构复杂度**：依赖关系图和跨组件导入
+- **现有文档**：该区域中任何 CLAUDE.md 文件的存在和状态
 
-### 1.2. Select Strategy
-Think deeply about this documentation generation task and strategy based on the auto-loaded project context. Based on the assessment, select and announce the strategy.
+### 1.2. 选择策略
+深入思考此文档生成任务和基于自动加载项目上下文的策略。基于评估，选择并宣布策略。
 
-**Strategy Logic:**
-- **Direct Creation**: Simple targets (< 15 files, single tech, standard patterns)
-- **Focused Analysis**: Moderate complexity (15-75 files, 2-3 techs, some novel patterns)
-- **Comprehensive Analysis**: High complexity (> 75 files, 3+ techs, significant architectural depth)
+**策略逻辑**：
+- **直接创建**：简单目标（<15 个文件，单一技术，标准模式）
+- **重点分析**：中等复杂度（15-75 个文件，2-3 种技术，一些新颖模式）
+- **全面分析**：高复杂度（>75 个文件，3+ 种技术，显著架构深度）
 
 ---
 
-## Step 2: Information Gathering (Analysis Phase)
+## 第 2 步：信息收集（分析阶段）
 
-Based on the chosen strategy, gather the necessary information.
+基于选择的策略，收集必要信息。
 
-### Strategy A: Direct Creation
-Proceed directly to **Step 3.1**. Perform lightweight analysis during content generation.
+### 策略 A：直接创建
+直接进行 **第 3.1 步**。在内容生成期间执行轻量级分析。
 
-### Strategy B: Focused or Comprehensive Analysis (Sub-Agent Orchestration)
+### 策略 B：重点或全面分析（子代理编排）
 
-#### 2.1. Sub-Agent Roles
-Select from these specialized roles based on complexity assessment:
-- **`Code_Analyzer`**: File structure, implementation patterns, logic flow, coding conventions
-- **`Tech_Stack_Identifier`**: Frameworks, libraries, dependencies, technology-specific patterns
-- **`Architecture_Mapper`**: Cross-component dependencies, integration points, data flow
-- **`Doc_Validator`**: Existing documentation accuracy, gaps, valuable insights, content overlap analysis
+#### 2.1. 子代理角色
+基于复杂度评估从这些专业化角色中选择：
+- **`Code_Analyzer`**：文件结构、实施模式、逻辑流、编码约定
+- **`Tech_Stack_Identifier`**：框架、库、依赖、技术特定模式
+- **`Architecture_Mapper`**：跨组件依赖、集成点、数据流
+- **`Doc_Validator`**：现有文档准确性、缺口、有价值洞察、内容重叠分析
 
-#### 2.2. Launch Sub-Agents
-**Execution Plan:**
-- **Focused Analysis (2-3 agents)**: `Code_Analyzer` + `Tech_Stack_Identifier` + `Doc_Validator` (if existing docs)
-- **Comprehensive Analysis (3-4 agents)**: All agents as needed
+#### 2.2. 启动子代理
+**执行计划**：
+- **重点分析（2-3 个代理）**：`Code_Analyzer` + `Tech_Stack_Identifier` + `Doc_Validator`（如果存在现有文档）
+- **全面分析（3-4 个代理）**：根据需要所有代理
 
-**CRITICAL: Launch agents in parallel using a single message with multiple Task tool invocations for optimal performance.**
+**关键：为获得最佳性能，使用包含多个 Task 工具调用的单个消息并行启动代理。**
 
-**Task Template:**
+**任务模板**：
 ```
-Task: "As the [Agent_Role], analyze the codebase at `[target_path]` to support documentation generation.
+任务："作为 [Agent_Role]，分析 `[target_path]` 中的代码库以支持文档生成。
 
-Your focus: [role-specific goal, e.g., 'identifying all architectural patterns and dependencies']
+您的重点：[角色特定目标，例如，'识别所有架构模式和依赖']
 
-Standard workflow:
-1. Review auto-loaded project context (CLAUDE.md, project-structure.md, docs-overview.md)
-2. Analyze the target path for your specialized area
-3. Return structured findings for documentation generation
+标准工作流：
+1. 审查自动加载的项目上下文（CLAUDE.md、project-structure.md、docs-overview.md）
+2. 分析目标路径的您的专业化领域
+3. 返回文档生成的结构化发现
 
-Return a comprehensive summary of your findings for this role."
+返回此角色的综合发现。"
 ```
 
 ---
 
-## Step 3: Documentation Generation
+## 第 3 步：文档生成
 
-Think deeply about synthesizing findings and generating comprehensive documentation. Using gathered information, intelligently synthesize and generate the documentation content.
+深入思考综合发现和生成全面文档。使用收集的信息，智能地综合和生成文档内容。
 
-### 3.1. Content Synthesis & Generation
+### 3.1. 内容综合和生成
 
-#### For Direct Creation (No Sub-Agents)
-**Code-First Analysis Methodology:**
-1. **Directory Structure Analysis**: Map file organization and purposes using Glob/LS
-2. **Import Dependency Analysis**: Use Grep to identify integration patterns and dependencies  
-3. **Pattern Extraction**: Read key files to identify architectural patterns and coding conventions
-4. **Technology Usage Analysis**: Detect frameworks, libraries, and technology-specific patterns
-5. **Existing Documentation Assessment**: Read any current CLAUDE.md files for valuable insights
+#### 对于直接创建（无子代理）
+**代码优先分析方法论**：
+1. **目录结构分析**：使用 Glob/LS 映射文件组织和目的
+2. **导入依赖分析**：使用 Grep 识别集成模式和依赖关系  
+3. **模式提取**：读取关键文件以识别架构模式和编码约定
+4. **技术使用分析**：检测框架、库和技术特定模式
+5. **现有文档评估**：读取任何当前 CLAUDE.md 文件以获得有价值洞察
 
-#### For Sub-Agent Strategies  
-**Synthesis Integration Process:**
-1. **Compile Core Findings**: Merge agent findings for immediate documentation generation
-2. **Extract Cross-Tier Patterns**: Identify system-wide patterns that may impact foundational documentation
-3. **Resolve Information Conflicts**: When code contradicts existing docs, use code as source of truth
-4. **Identify Content Gaps**: Find areas needing new documentation based on analysis
-5. **Apply Project Conventions**: Use coding standards and naming conventions from the auto-loaded /CLAUDE.md
-6. **Content Overlap Identification**: From Doc_Validator findings, identify existing documentation that overlaps with target content for later migration analysis
+#### 对于子代理策略  
+**综合集成过程**：
+1. **编译核心发现**：合并代理发现以立即进行文档生成
+2. **提取跨层模式**：识别可能影响基础文档的系统级模式
+3. **解决信息冲突**：当代码与现有文档冲突时，使用代码作为事实来源
+4. **识别内容缺口**：基于分析找到需要新文档的区域
+5. **应用项目约定**：使用自动加载的 /CLAUDE.md 中的编码标准和命名约定
+6. **内容重叠识别**：从 Doc_Validator 发现中，识别与目标内容重叠的现有文档，以便以后迁移分析
 
-#### Content Generation Process
-**For Both Approaches:**
-1. **Select Template**: Choose Tier 2 or Tier 3 based on target classification
-2. **Apply Content Treatment Strategy**:
-   - **Preserve**: Validated architectural insights from existing documentation
-   - **Enhance**: Extend existing patterns with newly discovered implementation details
-   - **Replace**: Outdated content that conflicts with current code reality
-   - **Create**: New documentation for undocumented patterns and decisions
-3. **Populate Sections**: Fill template sections with synthesized findings
-4. **Ensure Completeness**: Include architectural decisions, patterns, dependencies, and integration points
-5. **Follow AI-Optimized Principles**: Structure for AI consumption with clear cross-references
+#### 内容生成过程
+**两种方法通用**：
+1. **选择模板**：基于目标分类选择第 2 层或第 3 层
+2. **应用内容处理策略**：
+   - **保留**：来自现有文档的已验证架构洞察
+   - **增强**：使用新发现的实施细节扩展现有模式
+   - **替换**：与当前代码现实冲突的过时内容
+   - **创建**：未记录模式和决策的新文档
+3. **填充章节**：使用综合发现填充模板章节
+4. **确保完整性**：包含架构决策、模式、依赖和集成点
+5. **遵循 AI 优化原则**：为 AI 消费构建结构，具有清晰的交叉引用
 
-### 3.2. Template Guidelines
+### 3.2. 模板指南
 
-**Tier 2 (Component-Level):**
+**第 2 层（组件级）**：
 ```markdown
-# [Component Name] - Component Context
+# [组件名称] - 组件上下文
 
-## Purpose
-[Component purpose and key responsibilities]
+## 目的
+[组件目的和关键职责]
 
-## Current Status: [Status]
-[Status with evolution context and rationale]
+## 当前状态：[状态]
+[具有演变背景和理由的状态]
 
-## Component-Specific Development Guidelines
-[Technology-specific patterns and conventions]
+## 组件特定开发指南
+[技术特定模式和约定]
 
-## Major Subsystem Organization
-[High-level structure based on actual code organization]
+## 主要子系统组织
+[基于实际代码组织的高级结构]
 
-## Architectural Patterns
-[Core patterns and design decisions]
+## 架构模式
+[核心模式和设计决策]
 
-## Integration Points
-[Dependencies and connections with other components]
+## 集成点
+[与其他组件的依赖和连接]
 ```
 
-**Tier 3 (Feature-Specific):**
+**第 3 层（功能特定）**：
 ```markdown
-# [Feature Area] Documentation
+# [功能区域] 文档
 
-## [Area] Architecture
-[Key architectural elements and integration patterns]
+## [区域] 架构
+[关键架构元素和集成模式]
 
-## Implementation Patterns
-[Core patterns and error handling strategies]
+## 实施模式
+[核心模式和错误处理策略]
 
-## Key Files and Structure
-[File organization with purposes]
+## 关键文件和结构
+[具有目的的文件组织]
 
-## Integration Points
-[How this integrates with other parts of the system]
+## 集成点
+[这如何与系统的其他部分集成]
 
-## Development Patterns
-[Testing approaches and debugging strategies]
+## 开发模式
+[测试方法和调试策略]
 ```
 
 ---
 
-## Step 4: Finalization & Housekeeping
+## 第 4 步：最终化和整理
 
-### 4.1. Write Documentation File
-**Action**: Write the generated content to the target path.
+### 4.1. 编写文档文件
+**操作**：将生成的内容写入目标路径。
 
-### 4.2. Update Documentation Registry
+### 4.2. 更新文档注册表
 
-#### Update docs-overview.md
-**For new documentation files:**
-- Add to appropriate tier section (Feature-Specific or Component-Level)
-- Follow established entry format with path and description
-- Maintain alphabetical ordering within sections
+#### 更新 docs-overview.md
+**对于新文档文件**：
+- 添加到适当的层级部分（功能特定或组件级）
+- 遵循带有路径和描述的既定条目格式
+- 在章节内保持字母顺序
 
-**For updated existing files:**
-- Verify entry exists and description is current
-- Update any changed purposes or scopes
+**对于更新的现有文件**：
+- 验证条目存在且描述是最新的
+- 更新任何更改的目的或范围
 
-#### Update Project Structure (if needed)
-**If new directories were created:**
-- Update file tree in `/docs/ai-context/project-structure.md`
-- Add directory comments explaining purpose
-- Maintain tree structure formatting and organization
+#### 更新项目结构（如需要）
+**如果创建了新目录**：
+- 更新 `/docs/ai-context/project-structure.md` 中的文件树
+- 添加解释目的的目录注释
+- 维护树结构格式和组织
 
-### 4.3. Quality Validation
-**Action**: Verify tier appropriateness, code accuracy, cross-reference validity, and consistency with existing documentation patterns.
+### 4.3. 质量验证
+**操作**：验证层级适当性、代码准确性、交叉引用有效性和与现有文档模式的一致性。
 
-### 4.4. Tier 1 Validation & Recommendations
+### 4.4. 第 1 层验证和建议
 
-**Action**: Compare discovered code patterns against foundational documentation to identify inconsistencies and improvement opportunities.
+**操作**：将发现的代码模式与基础文档进行比较，以识别不一致和改进机会。
 
-#### Process
-1. **Discover Tier 1 Files**: Read `/docs/ai-context/docs-overview.md` to identify all foundational documentation files
-2. **Read Foundational Docs**: Load discovered Tier 1 files to understand documented architecture
-3. **Cross-Tier Analysis**: Using analysis findings from previous steps, compare:
-   - **Technology Stack**: Discovered frameworks/tools vs documented stack
-   - **Architecture Patterns**: Implementation reality vs documented decisions  
-   - **Integration Points**: Actual dependencies vs documented integrations
-4. **Generate Recommendations**: Output evidence-based suggestions for foundational documentation updates
+#### 过程
+1. **发现第 1 层文件**：读取 `/docs/ai-context/docs-overview.md` 以识别所有基础文档文件
+2. **读取基础文档**：加载发现的基础文档文件以理解文档化架构
+3. **跨层分析**：使用前几步的分析发现，比较：
+   - **技术栈**：发现的框架/工具 vs 文档化堆栈
+   - **架构模式**：实施现实 vs 文档化决策  
+   - **集成点**：实际依赖 vs 文档化集成
+4. **生成建议**：输出基于证据的基础文档更新建议
 
-### 4.5. Content Migration & Redundancy Management
+### 4.5. 内容迁移和冗余管理
 
-**Action**: Intelligently manage content hierarchy and eliminate redundancy across documentation tiers.
+**操作**：智能地管理内容层次结构并消除文档各层之间的冗余。
 
-#### Cross-Reference Analysis
-1. **Identify Related Documentation**: Using Doc_Validator findings from Step 3.1 synthesis and target tier classification, identify existing documentation that may contain overlapping content
-2. **Content Overlap Detection**: Compare new documentation content with existing files to identify:
-   - **Duplicate Information**: Identical content that should exist in only one location
-   - **Hierarchical Overlaps**: Content that exists at wrong tier level (implementation details in architectural docs)
-   - **Cross-Reference Opportunities**: Content that should be linked rather than duplicated
+#### 交叉引用分析
+1. **识别相关文档**：使用第 3.1 步综合中的 Doc_Validator 发现和目标层级分类，识别可能包含重叠内容的现有文档
+2. **内容重叠检测**：将新文档内容与现有文件进行比较以识别：
+   - **重复信息**：应该只存在于一个位置的相同内容
+   - **层次重叠**：存在于错误层级的内容（架构文档中的实施细节）
+   - **交叉引用机会**：应该被链接而不是重复的内容
 
-#### Smart Content Migration Strategy
-**Content Classification Framework:**
-- **Tier-Appropriate Duplication**: High-level architectural context can exist at both Tier 2 and Tier 3 with different detail levels
-- **Migration Candidates**: Detailed implementation patterns, specific code examples, feature-specific technical details
-- **Reference Targets**: Stable architectural decisions, design rationale, cross-cutting concerns
+#### 智能内容迁移策略
+**内容分类框架**：
+- **层级适当重复**：高级架构上下文可以存在于第 2 层和第 3 层，具有不同的详细级别
+- **迁移候选**：详细实施模式、特定代码示例、功能特定技术细节
+- **引用目标**：稳定的架构决策、设计理由、跨域关注点
 
-**Migration Decision Logic:**
-1. **For Tier 3 Creation (Feature-Specific)**:
-   - **Extract from Tier 2**: Move feature-specific implementation details to new Tier 3 file
-   - **Preserve in Tier 2**: Keep high-level architectural overview and design decisions
-   - **Add Cross-References**: Link Tier 2 overview to detailed Tier 3 implementation
+**迁移决策逻辑**：
+1. **对于第 3 层创建（功能特定）**：
+   - **从第 2 层提取**：将功能特定实施细节移至新的第 3 层文件
+   - **在第 2 层保留**：保持高级架构概览和设计决策
+   - **添加交叉引用**：将第 2 层概览链接到详细的第 3 层实施
 
-2. **For Tier 2 Creation (Component-Level)**:
-   - **Consolidate from Multiple Tier 3**: Aggregate architectural insights from existing feature docs
-   - **Preserve Tier 3 Details**: Keep implementation specifics in feature documentation
-   - **Create Navigation Structure**: Add references to relevant Tier 3 documentation
+2. **对于第 2 层创建（组件级）**：
+   - **从多个第 3 层整合**：从现有功能文档聚合架构洞察
+   - **保留第 3 层细节**：在功能文档中保持实施特定性
+   - **创建导航结构**：添加对相关第 3 层文档的引用
 
-#### Content Migration Execution
-**Migration Process:**
-1. **Identify Source Content**: Extract content that should migrate from existing files
-2. **Content Transformation**: Adapt content to appropriate tier level (architectural vs implementation focus)
-3. **Update Source Files**: Remove migrated content and add cross-references to new location
-4. **Preserve Context**: Ensure source files maintain coherence after content removal
-5. **Validate Migrations**: Confirm no broken references or lost information
+#### 内容迁移执行
+**迁移过程**：
+1. **识别源内容**：从现有文件中提取应该迁移的内容
+2. **内容转换**：将内容调整到适当的层级级别（架构 vs 实施重点）
+3. **更新源文件**：移除迁移的内容并添加对新位置的交叉引用
+4. **保留上下文**：确保源文件在内容移除后保持连贯性
+5. **验证迁移**：确认没有损坏的引用或丢失的信息
 
-**Safety Framework:**
-- **Conservative Defaults**: When uncertain, preserve content in original location and add references
-- **Content Preservation**: Never delete content without creating it elsewhere first
-- **Migration Reversibility**: Document all migrations to enable rollback if needed
-
----
-
-## Step 5: Generate Summary
-
-Provide a comprehensive summary including:
-
-### Documentation Creation Results
-- **Documentation type and location** (Tier 2 or Tier 3)
-- **Strategy used** (Direct Creation, Focused Analysis, or Comprehensive Analysis)
-- **Key patterns documented** (architectural decisions, implementation patterns)
-- **Registry updates made** (docs-overview.md, project-structure.md entries)
-
-### Tier 1 Architectural Intelligence
-**Based on Step 4.4 analysis, provide structured recommendations:**
-
-#### Critical Updates Needed
-- **File**: [specific foundational doc path]
-- **Issue**: [specific inconsistency with evidence]
-- **Recommendation**: [specific update needed]
-- **Evidence**: [code references supporting the recommendation]
-
-#### Architecture Enhancement Opportunities  
-- **Gap Identified**: [missing foundational documentation area]
-- **Scope**: [what should be documented]
-- **Rationale**: [why this deserves foundational documentation]
-- **Implementation Evidence**: [code patterns discovered]
-
-#### Documentation Health Assessment
-- **Alignment Score**: [overall consistency between code and docs]
-- **Most Accurate Areas**: [foundational docs that match implementation well]
-- **Areas Needing Attention**: [foundational docs with significant gaps/inconsistencies]
-- **Systematic Improvement Priority**: [recommended order for addressing issues]
-
-#### Content Migration Results
-**Document all content hierarchy changes and redundancy eliminations:**
-
-- **Content Migrated From**: [source file path] → [target file path]
-  - **Content Type**: [e.g., "implementation patterns", "technical details", "architectural decisions"]
-  - **Rationale**: [why this content belongs at the target tier]
-  - **Cross-References Added**: [navigation links created between tiers]
-
-- **Content Preserved At**: [broader tier file]
-  - **Content Type**: [e.g., "architectural overview", "design decisions", "integration patterns"]
-  - **Rationale**: [why this content remains at the broader tier]
-
-- **Redundancies Eliminated**: 
-  - **Duplicate Content Removed**: [specific duplications eliminated]
-  - **Hierarchical Corrections**: [content moved to appropriate tier level]
-  - **Reference Consolidations**: [areas where links replaced duplication]
-
-- **Migration Safety**: 
-  - **Content Preserved**: [confirmation that no information was lost]
-  - **Rollback Information**: [documentation of changes for potential reversal]
-  - **Validation Results**: [confirmation of no broken references]
-
-#### Next Documentation Steps (Optional Recommendations)
-- **Feature-Specific Documentation Candidates**: [suggest additional Tier 3 docs that would be valuable]
-- **Cross-Component Documentation Needs**: [identify other components needing similar analysis]
-- **Documentation Debt Eliminated**: [summary of redundancies and inconsistencies resolved]
+**安全框架**：
+- **保守默认**：当不确定时，将内容保留在原始位置并添加引用
+- **内容保留**：在别处创建之前永不删除内容
+- **迁移可逆性**：记录所有迁移以在需要时启用回滚
 
 ---
 
-Now proceed to create/regenerate documentation based on the request: $ARGUMENTS
+## 第 5 步：生成摘要
+
+提供全面的摘要，包括：
+
+### 文档创建结果
+- **文档类型和位置**（第 2 层或第 3 层）
+- **使用的策略**（直接创建、重点分析或全面分析）
+- **记录的关键模式**（架构决策、实施模式）
+- **注册表更新**（docs-overview.md、project-structure.md 条目）
+
+### 第 1 层架构智能
+**基于第 4.4 步分析，提供结构化建议：**
+
+#### 关键更新需求
+- **文件**：[特定基础文档路径]
+- **问题**：[具有证据的具体不一致]
+- **建议**：[需要特定更新]
+- **证据**：[支持建议的代码引用]
+
+#### 架构增强机会  
+- **识别的缺口**：[缺失的基础文档区域]
+- **范围**：[应记录的内容]
+- **理由**：[为什么这值得基础文档]
+- **实施证据**：[发现的代码模式]
+
+#### 文档健康评估
+- **一致性得分**：[代码和文档之间的整体一致性]
+- **最准确区域**：[与实施匹配良好的基础文档]
+- **需要关注的区域**：[具有显著缺口/不一致的基础文档]
+- **系统改进优先级**：[解决问题的推荐顺序]
+
+#### 内容迁移结果
+**记录所有内容层次结构更改和冗余消除：**
+
+- **内容迁移自**：[源文件路径] → [目标文件路径]
+  - **内容类型**：[例如，"实施模式"、"技术细节"、"架构决策"]
+  - **理由**：[为什么此内容属于目标层级]
+  - **添加的交叉引用**：[在层级之间创建的导航链接]
+
+- **内容保留在**：[更广泛的层级文件]
+  - **内容类型**：[例如，"架构概览"、"设计决策"、"集成模式"]
+  - **理由**：[为什么此内容保留在更广泛的层级]
+
+- **消除的冗余**： 
+  - **删除的重复内容**：[消除的特定重复]
+  - **层次纠正**：[移动到适当层级级别的内容]
+  - **引用整合**：[链接替换重复的区域]
+
+- **迁移安全性**： 
+  - **保留的内容**：[确认没有信息丢失]
+  - **回滚信息**：[为潜在回滚记录的更改]
+  - **验证结果**：[确认没有损坏引用]
+
+#### 下一步文档步骤（可选建议）
+- **功能特定文档候选**：[建议有价值的其他第 3 层文档]
+- **跨组件文档需求**：[识别需要类似分析的其他组件]
+- **消除的文档债务**：[解决的冗余和不一致摘要]
+
+---
+
+现在基于请求继续创建/重新生成文档：$ARGUMENTS
