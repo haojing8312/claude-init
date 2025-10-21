@@ -51,6 +51,8 @@
 - **项目模板** - 多种编程语言的项目结构模板
 - **文档模板** - 标准化的中文文档模板
 - **配置示例** - 开箱即用的配置文件
+- **Skills 扩展** - 模块化的能力扩展系统
+- **示例项目** - Python、Node.js、Web 应用完整示例
 
 ## 🚀 快速开始
 
@@ -159,9 +161,9 @@ cp your-sound.mp3 .claude/hooks/sounds/input.mp3
 /full-context               # 全面上下文收集和分析
 
 # 🔍 代码质量
-/code-review               # 多专家角度代码审查  
+/code-review               # 多专家角度代码审查
 
-# 🧠 AI 咨询 
+# 🧠 AI 咨询
 /gemini-consult            # 与 Gemini 深入对话咨询
 
 # 📝 文档管理
@@ -171,15 +173,73 @@ cp your-sound.mp3 .claude/hooks/sounds/input.mp3
 # ♻️ 代码维护
 /refactor                  # 智能重构代码
 
-# 🤝 会话管理  
+# 🤝 会话管理
 /handoff                   # 保留上下文和任务状态
 
 # 📡 MCP 工具
 /mcp-status                # 检查 MCP 服务器状态
 ```
 
-**使用方式：** 直接在 Claude Code 中输入斜杠命令  
+**使用方式：** 直接在 Claude Code 中输入斜杠命令
 **自动功能：** 所有命令自动获得项目上下文注入
+
+### 5. 🎯 Skills 模块化能力扩展
+
+**什么是 Skills？** Skills 是 [Claude Code 云服务](https://www.anthropic.com/news/claude-code-on-the-web)的强大功能，让你创建可复用的能力模块。
+
+**核心特性：**
+- 📦 **自动调用** - Claude 根据需求智能选择合适的 skill
+- 🎯 **渐进加载** - 只在需要时加载，节省上下文空间
+- 🔧 **易于创建** - 简单的 Markdown + YAML 格式
+- 🌍 **灵活部署** - 全局或项目级别安装
+
+**内置 Skills：**
+- 📰 **News Skill** - Anthropic 新闻追踪和深度分析
+  - 自动获取最新官方新闻
+  - 多维度分析（技术、商业、行业）
+  - 结构化知识整理
+
+**使用示例：**
+```
+你：分析最新的 Anthropic 新闻
+Claude：[自动使用 news skill 获取和分析]
+```
+
+**详细文档：** 查看 `templates/.claude/skills/README.md`
+**了解更多：** [Claude Code 云服务介绍](https://www.anthropic.com/news/claude-code-on-the-web)
+
+### 6. 📦 项目示例库
+
+提供完整的项目模板，快速启动开发：
+
+**可用示例：**
+
+#### 🐍 Python 项目
+- FastAPI Web 应用结构
+- 数据科学项目配置
+- 机器学习工作流
+
+#### 🟢 Node.js 项目
+- Express.js API 服务
+- React 全栈应用
+- 微服务架构
+
+#### 🌐 Web 应用
+- 前后端分离架构
+- 移动端适配
+- 部署和运维配置
+
+**快速开始：**
+```bash
+# 复制示例项目
+cp -r examples/python-project my-new-project
+cd my-new-project
+
+# 开始使用
+claude
+```
+
+**详细文档：** 查看 `examples/README.md`
 
 ## 💬 使用反馈
 
