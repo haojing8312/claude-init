@@ -360,15 +360,15 @@ main() {
     
     # MCP 服务器安装指导
     echo
-    print_color "$CYAN" "📡 推荐安装 MCP 服务器增强功能："
+    print_color "$CYAN" "📡 推荐安装 MCP 服务器增强功能（全局安装，所有项目可用）："
     echo
     print_color "$YELLOW" "Context7 - 获取最新库文档："
-    echo "  claude mcp add context7 --scope project -- npx -y @upstash/context7-mcp --api-key YOUR_CONTEXT7_API_KEY"
+    echo "  claude mcp add context7 -s user -- npx -y @upstash/context7-mcp --api-key YOUR_CONTEXT7_API_KEY"
     echo
     print_color "$YELLOW" "Gemini - 深度代码分析和咨询："
-    echo "  claude mcp add gemini --scope project -- npx -y gemini-mcp-tool"
+    echo "  claude mcp add gemini -s user -- npx -y gemini-mcp-tool"
     echo
-    print_color "$YELLOW" "💡 MCP 服务器让 Claude Code 功能更强大，强烈推荐安装！"
+    print_color "$YELLOW" "💡 使用 -s user 全局安装，MCP 服务器在所有项目中都可用，无需重复安装！"
 }
 
 # 运行主函数
