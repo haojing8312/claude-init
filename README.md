@@ -185,7 +185,7 @@ cp your-sound.mp3 .claude/hooks/sounds/input.mp3
 
 ### 5. 🎯 Skills 模块化能力扩展
 
-**什么是 Skills？** Skills 是 Claude Code 的强大功能，让你创建可复用的能力模块。
+**什么是 Skills？** Skills 是 [Claude Code 云服务](https://www.anthropic.com/news/claude-code-on-the-web)的强大功能，让你创建可复用的能力模块。
 
 **核心特性：**
 - 📦 **自动调用** - Claude 根据需求智能选择合适的 skill
@@ -206,6 +206,7 @@ Claude：[自动使用 news skill 获取和分析]
 ```
 
 **详细文档：** 查看 `templates/.claude/skills/README.md`
+**了解更多：** [Claude Code 云服务介绍](https://www.anthropic.com/news/claude-code-on-the-web)
 
 ### 6. 📦 项目示例库
 

@@ -12,10 +12,12 @@
   - 新增 `templates/.claude/skills/` 目录
   - 提供 Skills 使用示例和最佳实践
   - 包含 news skill 演示案例
+  - 基于 [Claude Code 云服务](https://www.anthropic.com/news/claude-code-on-the-web) 新特性
 - **项目示例库扩展** - 新增多个实用项目模板
   - Node.js 项目示例（Express.js, React全栈）
   - Web 应用示例（前后端分离架构）
   - 完整的示例项目 README 和使用指南
+  - 基于 Claude Code 最新功能优化
 
 ### 📚 文档改进
 - **README 功能扩展** - 添加 Skills 和 Examples 完整介绍
